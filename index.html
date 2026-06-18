@@ -438,7 +438,7 @@
       border: 1px solid #d2d8da;
       min-height: 38px;
       display: grid;
-      grid-template-columns: 26px 1fr auto;
+      grid-template-columns: 26px 1fr auto auto;
       align-items: center;
       padding: 7px 10px;
       gap: 8px;
@@ -475,6 +475,10 @@
     }
 
     .meta-icons .mi:last-child {
+      cursor: pointer;
+    }
+
+    .menu-trigger {
       cursor: pointer;
     }
 
@@ -650,6 +654,100 @@
       align-items: center;
     }
 
+    .mapping-control {
+      position: relative;
+    }
+
+    .mapping-toggle {
+      width: 100%;
+      min-height: 46px;
+      border: 1px solid var(--line-dark);
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      text-align: left;
+      gap: 10px;
+    }
+
+    .mapping-toggle .mi {
+      color: #526772;
+      flex-shrink: 0;
+    }
+
+    .mapping-selected {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      min-height: 28px;
+    }
+
+    .mapping-placeholder {
+      color: #6f7f86;
+    }
+
+    .mapping-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border: 1px solid #8a9ba1;
+      background: #f2f6f7;
+      padding: 4px 10px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .mapping-chip button {
+      border: 0;
+      background: transparent;
+      min-height: 0;
+      padding: 0;
+      width: 14px;
+      height: 14px;
+      line-height: 1;
+      color: #4f5f67;
+      font-size: 14px;
+      display: inline-grid;
+      place-items: center;
+    }
+
+    .mapping-dropdown {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: calc(100% + 4px);
+      border: 1px solid var(--line);
+      background: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,.1);
+      max-height: 220px;
+      overflow: auto;
+      display: none;
+      z-index: 8;
+    }
+
+    .mapping-dropdown.open {
+      display: block;
+    }
+
+    .mapping-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-bottom: 1px solid #edf2f3;
+      background: #fff;
+    }
+
+    .mapping-option:last-child {
+      border-bottom: 0;
+    }
+
+    .mapping-option:hover {
+      background: #f6fafb;
+    }
+
     .side-tools {
       position: fixed;
       right: 26px;
@@ -733,10 +831,34 @@
 
     .answer-option {
       display: grid;
-      grid-template-columns: 22px 1fr auto auto;
+      grid-template-columns: 18px 22px 1fr auto auto auto auto;
       gap: 9px;
       align-items: center;
       margin: 10px 0;
+    }
+
+    .answer-marker {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid #7d8d94;
+      position: relative;
+      display: inline-block;
+    }
+
+    .answer-marker.multi {
+      border-radius: 3px;
+    }
+
+    .answer-index {
+      font-weight: 700;
+      color: #001a3a;
+      text-align: right;
+    }
+
+    .answer-warning {
+      color: #93a0a5;
+      font-size: 18px;
     }
 
     .add-square {
@@ -934,17 +1056,35 @@
             <div class="answer-node">
               <span class="branch-dot">-</span>
               <span>Yes</span>
-              <span class="mi" style="margin-left:auto;" aria-hidden="true">more_horiz</span>
+              <div class="meta-icons" style="margin-left:auto;">
+                <span class="mi menu-trigger" aria-hidden="true">more_horiz</span>
+                <div class="context-menu">
+                  <button class="delete-question"><span class="mi" aria-hidden="true" style="font-size: 16px; margin-right: 8px;">delete</span>Delete</button>
+                </div>
+              </div>
             </div>
             <div class="nested-question">
               <button class="mini-add" id="addNested" title="Add nested question">+</button>
               <strong>Where are you based</strong>
               <span class="pill">1.1</span>
+              <div class="meta-icons">
+                <span class="mi menu-trigger" aria-hidden="true">more_horiz</span>
+                <div class="context-menu">
+                  <button class="edit-question"><span class="mi" aria-hidden="true" style="font-size: 16px; margin-right: 8px;">edit</span>Edit</button>
+                  <button class="delete-question"><span class="mi" aria-hidden="true" style="font-size: 16px; margin-right: 8px;">delete</span>Delete</button>
+                </div>
+              </div>
             </div>
             <div class="answer-node">
               <span class="branch-dot gray"></span>
               <span>No</span>
-              <span class="mi" style="margin-left:auto;" aria-hidden="true">more_horiz</span>
+              <div class="meta-icons" style="margin-left:auto;">
+                <span class="mi menu-trigger" aria-hidden="true">more_horiz</span>
+                <div class="context-menu">
+                  <button class="add-followup"><span class="mi" aria-hidden="true" style="font-size: 16px; margin-right: 8px;">account_tree</span>Add Follow Up Question</button>
+                  <button class="delete-question"><span class="mi" aria-hidden="true" style="font-size: 16px; margin-right: 8px;">delete</span>Delete</button>
+                </div>
+              </div>
             </div>
           </div>
           <div class="meta-icons">
@@ -1010,7 +1150,7 @@
                   <div id="selectedAnswers"></div>
                 </div>
                 <label for="logicSelect">Select Logic <span class="mi" title="Help" aria-hidden="true">help</span></label>
-                <select class="danger" id="logicSelect">
+                <select class="danger" id="logicSelect" disabled>
                   <option value="">Select a logic</option>
                   <option>May contain any</option>
                   <option>Must NOT contain any</option>
@@ -1033,11 +1173,13 @@
         <h3>Lesson 1 - Lesson 1</h3>
         <div class="mapping-grid">
           <label for="mapsTo">Maps to:</label>
-          <select id="mapsTo">
-            <option>Manager USA</option>
-            <option>Manager Europe</option>
-            <option>Default learner route</option>
-          </select>
+          <div class="mapping-control" id="mappingControl">
+            <button class="mapping-toggle" id="mapsTo" type="button" aria-haspopup="listbox" aria-expanded="false">
+              <span class="mapping-selected" id="mappingSelected"></span>
+              <span class="mi" aria-hidden="true">expand_more</span>
+            </button>
+            <div class="mapping-dropdown" id="mappingDropdown" role="listbox" aria-multiselectable="true"></div>
+          </div>
         </div>
       </div>
     </section>
@@ -1067,17 +1209,11 @@
         </div>
         <label for="responseType">Response Type</label>
         <select id="responseType">
-          <option>Learners can select only one answer</option>
-          <option>Learners can select multiple answers</option>
+          <option value="single">Learners can select only one answer</option>
+          <option value="multiple">Learners can select multiple answers</option>
         </select>
         <label>Answer Options</label>
         <div id="modalAnswers"></div>
-        <div class="answer-option">
-          <strong></strong>
-          <input class="field" id="newAnswer" placeholder="Answer Option">
-          <button class="add-square" id="addAnswer" title="Add answer option">+</button>
-          <span class="mi" title="Help" aria-hidden="true">help</span>
-        </div>
       </div>
       <div class="modal-footer">
         <button id="cancelModal">Cancel</button>
@@ -1091,12 +1227,16 @@
   <script>
     const state = {
       modalAnswers: ["USA", "Europe", "South America"],
+      modalResponseType: "single",
+      modalMode: "add",
       selectedAnswers: [],
+      selectedMappings: ["Manager USA"],
       answerBank: {
         "": ["Yes", "No"],
         manager: ["Yes", "No"],
         based: ["USA", "Europe", "South America"]
-      }
+      },
+      ruleCount: 1
     };
 
     const $ = (selector) => document.querySelector(selector);
@@ -1127,10 +1267,65 @@
       toggle.querySelector(".toggle-label").textContent = enabled ? "Yes" : "No";
     }
 
+    function getAvailableProfiles() {
+      const names = new Set();
+      $$(".profile-body").forEach(profile => {
+        const input = profile.querySelector("#profileName");
+        const heading = profile.querySelector(".profile-title");
+        const value = (input && input.value.trim()) || (heading && heading.textContent.trim()) || "";
+        if (value) names.add(value);
+      });
+
+      if (!names.size) {
+        names.add("Manager USA");
+      }
+
+      return Array.from(names);
+    }
+
+    function renderProfileMapping() {
+      const selectedBar = $("#mappingSelected");
+      const dropdown = $("#mappingDropdown");
+      if (!selectedBar || !dropdown) return;
+
+      const options = getAvailableProfiles();
+      state.selectedMappings = state.selectedMappings.filter(item => options.includes(item));
+
+      if (!state.selectedMappings.length) {
+        selectedBar.innerHTML = '<span class="mapping-placeholder">Select profiles</span>';
+      } else {
+        selectedBar.innerHTML = state.selectedMappings.map(item => `
+          <span class="mapping-chip">
+            <span>${item}</span>
+            <button class="remove-map" data-profile="${item}" type="button" aria-label="Remove ${item}">×</button>
+          </span>
+        `).join("");
+      }
+
+      dropdown.innerHTML = options.map(item => {
+        const checked = state.selectedMappings.includes(item) ? "checked" : "";
+        return `
+          <label class="mapping-option">
+            <input type="checkbox" data-map-option="${item}" ${checked}>
+            <span>${item}</span>
+          </label>
+        `;
+      }).join("");
+    }
+
+    function setMappingOpen(open) {
+      const dropdown = $("#mappingDropdown");
+      const toggle = $("#mapsTo");
+      if (!dropdown || !toggle) return;
+      dropdown.classList.toggle("open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+    }
+
     function renderAvailableAnswers() {
       const query = $("#answerSearch").value.trim().toLowerCase();
       const question = $("#ruleQuestion").value;
-      const source = state.answerBank[question].filter(item => !state.selectedAnswers.includes(item));
+      const sourceOptions = question ? (state.answerBank[question] || []) : [];
+      const source = sourceOptions.filter(item => !state.selectedAnswers.includes(item));
       const visible = source.filter(item => item.toLowerCase().includes(query));
       $("#availableCount").textContent = visible.length;
       $("#availableAnswers").innerHTML = visible.map(item => `
@@ -1150,34 +1345,149 @@
 
     function validateRule() {
       const hasQuestion = Boolean($("#ruleQuestion").value);
-      const hasLogic = Boolean($("#logicSelect").value);
+      const logicSelect = $("#logicSelect");
+
+      logicSelect.disabled = !hasQuestion;
+      if (!hasQuestion) logicSelect.value = "";
+
+      const hasLogic = hasQuestion && Boolean(logicSelect.value);
       $("#ruleQuestion").classList.toggle("danger", !hasQuestion);
       $("#questionError").style.display = hasQuestion ? "none" : "flex";
-      $("#logicSelect").classList.toggle("danger", !hasLogic);
+      logicSelect.classList.toggle("danger", !hasLogic);
       $("#logicError").style.display = hasLogic ? "none" : "flex";
       $("#addRule").disabled = !(hasQuestion && hasLogic && state.selectedAnswers.length);
       $("#addRule").classList.toggle("ghost", $("#addRule").disabled);
       $("#addRule").classList.toggle("outline-teal", !$("#addRule").disabled);
     }
 
+    function createRulePanel() {
+      const profileBody = $(".profile-body");
+      const sourceRule = profileBody.querySelector(".rule-card");
+      if (!sourceRule) return;
+
+      state.ruleCount += 1;
+
+      const newRule = sourceRule.cloneNode(true);
+      const title = newRule.querySelector("h3");
+      if (title) title.textContent = `Rule ${state.ruleCount}`;
+
+      const questionSelect = newRule.querySelector("#ruleQuestion");
+      const logicSelect = newRule.querySelector("#logicSelect");
+      const addRuleButton = newRule.querySelector("#addRule");
+
+      if (questionSelect) {
+        questionSelect.value = "";
+        questionSelect.classList.add("danger");
+      }
+
+      if (logicSelect) {
+        logicSelect.value = "";
+        logicSelect.disabled = true;
+        logicSelect.classList.add("danger");
+      }
+
+      const questionError = newRule.querySelector("#questionError");
+      const logicError = newRule.querySelector("#logicError");
+      if (questionError) questionError.style.display = "flex";
+      if (logicError) logicError.style.display = "flex";
+
+      const selectedCount = newRule.querySelector("#selectedCount");
+      const availableCount = newRule.querySelector("#availableCount");
+      if (selectedCount) selectedCount.textContent = "0";
+      if (availableCount) availableCount.textContent = "0";
+
+      const availableAnswers = newRule.querySelector("#availableAnswers");
+      const selectedAnswers = newRule.querySelector("#selectedAnswers");
+      if (selectedAnswers) selectedAnswers.innerHTML = "";
+      if (availableAnswers) availableAnswers.innerHTML = "";
+
+      const answerSearch = newRule.querySelector("#answerSearch");
+      if (answerSearch) answerSearch.value = "";
+
+      if (addRuleButton) {
+        addRuleButton.disabled = true;
+        addRuleButton.classList.add("ghost");
+        addRuleButton.classList.remove("outline-teal");
+      }
+
+      profileBody.appendChild(newRule);
+    }
+
     function renderModalAnswers() {
+      const isMulti = state.modalResponseType === "multiple";
       $("#modalAnswers").innerHTML = state.modalAnswers.map((item, index) => `
         <div class="answer-option">
-          <strong>${index + 1}</strong>
+          <span class="answer-marker ${isMulti ? "multi" : ""}" aria-hidden="true"></span>
+          <strong class="answer-index">${index + 1}</strong>
           <input class="field modal-answer-input" value="${item}" data-index="${index}">
           <button class="icon-button remove-modal-answer" data-index="${index}" title="Remove answer"><span class="mi" aria-hidden="true">close</span></button>
-          <span class="mi" title="Warning" aria-hidden="true">warning</span>
+          <span class="mi answer-warning" title="Warning" aria-hidden="true">warning</span>
+          ${index === state.modalAnswers.length - 1 ? '<button class="add-square add-modal-answer" title="Add answer option">+</button>' : '<span></span>'}
+          ${index === state.modalAnswers.length - 1 ? '<span class="mi" title="Help" aria-hidden="true">help</span>' : '<span></span>'}
         </div>
       `).join("");
     }
 
-    function openModal(number = "1.2", title = "Are you a manager?", answers = ["Yes", "No"]) {
+    function openModal(number = "1.2", title = "Are you a manager?", answers = ["Yes", "No"], mode = "add", responseType = "single") {
+      state.modalMode = mode;
+      state.modalResponseType = responseType;
       $("#questionNumber").textContent = number;
+      $("#modalTitle").textContent = mode === "edit" ? "Edit Question" : "Add Question";
+      $("#saveQuestion").textContent = mode === "edit" ? "Save" : "Add Question";
       $("#newQuestionTitle").value = title;
       state.modalAnswers = [...answers];
+      $("#responseType").value = responseType;
       renderModalAnswers();
       $("#questionModal").classList.add("open");
       $("#newQuestionTitle").focus();
+    }
+
+    function getEditQuestionPayload(button) {
+      const nested = button.closest(".nested-question");
+      if (nested) {
+        const title = nested.querySelector("strong")?.textContent?.trim() || "Question Title";
+        const number = nested.querySelector(".pill")?.textContent?.trim() || "1.1";
+        return {
+          number,
+          title,
+          answers: ["USA", "Europe", "South America"],
+          responseType: "multiple"
+        };
+      }
+
+      const treeQuestion = button.closest(".tree-question");
+      if (treeQuestion) {
+        const title = treeQuestion.querySelector(".question-title")?.textContent?.trim() || "Question Title";
+        const answers = treeQuestion.querySelectorAll(".answer-node > span:nth-child(2)");
+        const mappedAnswers = Array.from(answers).map(el => el.textContent.trim()).filter(Boolean);
+        return {
+          number: "1",
+          title,
+          answers: mappedAnswers.length ? mappedAnswers : ["Yes", "No"],
+          responseType: "single"
+        };
+      }
+
+      return {
+        number: "1",
+        title: "Question Title",
+        answers: ["Yes", "No"],
+        responseType: "single"
+      };
+    }
+
+    function getAddFollowUpPayload(button) {
+      const answerNode = button.closest(".answer-node");
+      const treeQuestion = answerNode?.closest(".tree-question");
+      const answerText = answerNode?.querySelector("span:nth-child(2)")?.textContent?.trim() || "Answer";
+      const baseNumber = treeQuestion?.querySelector(".number")?.textContent?.trim()?.replace(".", "") || "1";
+      const nextNested = (treeQuestion?.querySelectorAll(".nested-question").length || 0) + 1;
+      return {
+        number: `${baseNumber}.${nextNested}`,
+        title: `Follow up for ${answerText}`,
+        answers: ["Answer Option 1"],
+        responseType: "single"
+      };
     }
 
     function closeModal() {
@@ -1225,7 +1535,11 @@
       btn.addEventListener("click", (e) => {
         e.stopPropagation();
         if (btn.classList.contains("edit-question")) {
-          toast("Edit question");
+          const payload = getEditQuestionPayload(btn);
+          openModal(payload.number, payload.title, payload.answers, "edit", payload.responseType);
+        } else if (btn.classList.contains("add-followup")) {
+          const payload = getAddFollowUpPayload(btn);
+          openModal(payload.number, payload.title, payload.answers, "add", payload.responseType);
         } else if (btn.classList.contains("delete-question")) {
           toast("Delete question");
         }
@@ -1235,10 +1549,46 @@
 
     document.addEventListener("click", () => {
       $$(".context-menu").forEach(menu => menu.classList.remove("open"));
+      setMappingOpen(false);
     });
 
-    $("#openQuestion").addEventListener("click", () => openModal("1.2", "Question Title 1", ["Answer Option 1"]));
-    $("#addNested").addEventListener("click", () => openModal("1.1", "Where are you based", ["USA", "Europe", "South America"]));
+    $("#mapsTo").addEventListener("click", event => {
+      event.stopPropagation();
+      const open = $("#mappingDropdown").classList.contains("open");
+      setMappingOpen(!open);
+      renderProfileMapping();
+    });
+
+    $("#mappingDropdown").addEventListener("click", event => {
+      event.stopPropagation();
+      const checkbox = event.target.closest("input[data-map-option]");
+      if (!checkbox) return;
+
+      const profileName = checkbox.dataset.mapOption;
+      if (checkbox.checked) {
+        if (!state.selectedMappings.includes(profileName)) {
+          state.selectedMappings.push(profileName);
+        }
+      } else {
+        state.selectedMappings = state.selectedMappings.filter(item => item !== profileName);
+      }
+
+      renderProfileMapping();
+      markDirty();
+    });
+
+    $("#mappingSelected").addEventListener("click", event => {
+      const removeButton = event.target.closest(".remove-map");
+      if (!removeButton) return;
+
+      event.stopPropagation();
+      state.selectedMappings = state.selectedMappings.filter(item => item !== removeButton.dataset.profile);
+      renderProfileMapping();
+      markDirty();
+    });
+
+    $("#openQuestion").addEventListener("click", () => openModal("1.2", "Question Title 1", ["Answer Option 1"], "add", "single"));
+    $("#addNested").addEventListener("click", () => openModal("1.1", "Where are you based", ["USA", "Europe", "South America"], "add", "multiple"));
     $("#closeModal").addEventListener("click", closeModal);
     $("#cancelModal").addEventListener("click", closeModal);
     $("#questionModal").addEventListener("click", event => {
@@ -1259,24 +1609,21 @@
     });
     $("#closeHints").addEventListener("click", () => $("#questionHints").classList.remove("open"));
 
-    $("#addAnswer").addEventListener("click", () => {
-      const input = $("#newAnswer");
-      const value = input.value.trim();
-      if (!value) {
-        input.classList.add("danger");
-        return;
-      }
-      input.classList.remove("danger");
-      state.modalAnswers.push(value);
-      input.value = "";
-      renderModalAnswers();
-      markDirty();
-    });
-
     $("#modalAnswers").addEventListener("click", event => {
       const button = event.target.closest(".remove-modal-answer");
-      if (!button) return;
-      state.modalAnswers.splice(Number(button.dataset.index), 1);
+      if (button) {
+        state.modalAnswers.splice(Number(button.dataset.index), 1);
+        if (!state.modalAnswers.length) {
+          state.modalAnswers.push("Answer Option 1");
+        }
+        renderModalAnswers();
+        markDirty();
+        return;
+      }
+
+      const addButton = event.target.closest(".add-modal-answer");
+      if (!addButton) return;
+      state.modalAnswers.push(`Answer Option ${state.modalAnswers.length + 1}`);
       renderModalAnswers();
       markDirty();
     });
@@ -1284,6 +1631,12 @@
     $("#modalAnswers").addEventListener("input", event => {
       if (!event.target.matches(".modal-answer-input")) return;
       state.modalAnswers[Number(event.target.dataset.index)] = event.target.value;
+      markDirty();
+    });
+
+    $("#responseType").addEventListener("change", event => {
+      state.modalResponseType = event.target.value;
+      renderModalAnswers();
       markDirty();
     });
 
@@ -1313,6 +1666,7 @@
     $("#answerSearch").addEventListener("input", renderAvailableAnswers);
 
     $("#addSelected").addEventListener("click", () => {
+      if (!$("#ruleQuestion").value) return;
       $$("#availableAnswers input:checked").forEach(box => {
         if (!state.selectedAnswers.includes(box.value)) state.selectedAnswers.push(box.value);
       });
@@ -1323,6 +1677,7 @@
 
     $("#addAll").addEventListener("click", () => {
       const question = $("#ruleQuestion").value;
+      if (!question) return;
       state.answerBank[question].forEach(item => {
         if (!state.selectedAnswers.includes(item)) state.selectedAnswers.push(item);
       });
@@ -1348,7 +1703,11 @@
     });
 
     $("#addProfile").addEventListener("click", () => toast("New profile panel added in the authoring flow."));
-    $("#addRule").addEventListener("click", () => toast("Rule added."));
+    $("#addRule").addEventListener("click", () => {
+      createRulePanel();
+      toast("Rule added.");
+      markDirty();
+    });
     $("#checkInBtn").addEventListener("click", () => toast("Course checked in."));
     $("#saveBtn").addEventListener("click", () => {
       $("#saveBtn").disabled = true;
@@ -1359,6 +1718,7 @@
 
     $("#profileName").addEventListener("input", event => {
       $("#profileHeading").textContent = event.target.value || "Profile Name 1";
+      renderProfileMapping();
       markDirty();
     });
 
@@ -1368,6 +1728,7 @@
 
     renderAvailableAnswers();
     validateRule();
+    renderProfileMapping();
     $$("[data-toggle]").forEach(toggle => {
       setToggleState(toggle, toggle.getAttribute("aria-pressed") === "true");
     });
