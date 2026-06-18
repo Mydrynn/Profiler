@@ -1,0 +1,1377 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adaptive Role Profiler Mockup</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0">
+  <style>
+    :root {
+      --ink: #041d4a;
+      --muted: #5f6d78;
+      --line: #c8d1d4;
+      --line-dark: #9facb0;
+      --field: #f7f9f9;
+      --teal: #00ad9a;
+      --teal-dark: #008b7d;
+      --purple: #8a2fd1;
+      --danger: #c70024;
+      --danger-bg: #fde9ed;
+      --panel: #ffffff;
+      --soft: #eef7fa;
+      --shadow: 0 10px 30px rgba(0, 0, 0, .18);
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #fff;
+      font-size: 14px;
+      letter-spacing: 0;
+    }
+
+    button, input, textarea, select {
+      font: inherit;
+      color: inherit;
+    }
+
+    button {
+      border: 1px solid var(--line-dark);
+      background: #fff;
+      cursor: pointer;
+      min-height: 32px;
+      padding: 6px 12px;
+      border-radius: 0;
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: #fff;
+      border-bottom: 1px solid #d5dcdf;
+      box-shadow: 0 2px 6px rgba(0,0,0,.12);
+    }
+
+    .brand-row {
+      height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px 0 42px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #111;
+      font-size: 35px;
+      font-weight: 300;
+    }
+
+    .mark {
+      width: 34px;
+      height: 34px;
+      border: 5px solid var(--purple);
+      clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+      display: grid;
+      place-items: center;
+      color: var(--purple);
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #8d3746;
+    }
+
+    .icon-with-text {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .mi {
+      font-family: "Material Symbols Outlined";
+      font-weight: 400;
+      font-style: normal;
+      font-size: 20px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+
+    .ghost {
+      background: #f1f4f4;
+      color: #a6afb2;
+      border-color: #ccd5d8;
+    }
+
+    .outline-teal {
+      border-color: var(--teal);
+      color: var(--teal-dark);
+      background: #fff;
+    }
+
+    .solid-teal {
+      background: var(--teal);
+      border-color: var(--teal);
+      color: #fff;
+    }
+
+    .nav-row {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      padding: 0 24px;
+      white-space: nowrap;
+      overflow-x: auto;
+    }
+
+    .nav-item {
+      border: 0;
+      background: transparent;
+      padding: 11px 0 9px;
+      min-height: 0;
+      color: #111c31;
+      font-size: 16px;
+    }
+
+    .nav-item.active {
+      border-bottom: 2px solid var(--ink);
+      font-weight: 600;
+    }
+
+    .page {
+      max-width: 1750px;
+      margin: 0 auto;
+      border-left: 1px solid #cfd7da;
+      border-right: 1px solid #cfd7da;
+      min-height: 1200px;
+      padding: 20px 20px 60px;
+    }
+
+    .course-name {
+      margin-bottom: 20px;
+      color: #358176;
+      font-size: 13px;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    h1 {
+      margin: 0 0 24px;
+      font-weight: 400;
+      font-size: 36px;
+      color: #09255c;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 16px;
+      color: var(--ink);
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 16px;
+      color: var(--ink);
+    }
+
+    .config {
+      margin-top: 40px;
+      color: #0072a8;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .question-line {
+      display: grid;
+      grid-template-columns: minmax(260px, 1fr) auto;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 18px;
+    }
+
+    .toggle {
+      width: 56px;
+      height: 28px;
+      border-radius: 999px;
+      padding: 3px;
+      border: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 5px;
+      color: #fff;
+      background: var(--teal);
+      font-weight: 700;
+      min-height: 0;
+    }
+
+    .toggle .knob {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #fff;
+      display: block;
+      order: 2;
+      flex-shrink: 0;
+    }
+
+    .toggle.off {
+      background: #5e6d72;
+      justify-content: flex-start;
+    }
+
+    .toggle.off .knob { order: 0; }
+
+    .toggle.off .toggle-label {
+      margin-left: auto;
+      margin-right: 8px;
+    }
+
+    .profiler-content.hidden {
+      display: none;
+    }
+
+    .rule {
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+      margin-top: 18px;
+    }
+
+    .image-row {
+      display: grid;
+      grid-template-columns: 150px 150px minmax(280px, 1fr);
+      gap: 28px;
+      align-items: end;
+    }
+
+    .asset-label {
+      text-align: center;
+      min-height: 44px;
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      color: #201000;
+      font-size: 13px;
+    }
+
+    .asset-box {
+      border: 1px solid var(--line-dark);
+      height: 180px;
+      background: #eef1f1;
+      display: grid;
+      grid-template-rows: 26px 1fr;
+      color: #fff;
+      position: relative;
+    }
+
+    .asset-size {
+      color: #2d1630;
+      background: #f7f9f9;
+      border-bottom: 1px solid var(--line-dark);
+      text-align: center;
+      padding-top: 5px;
+      font-size: 12px;
+    }
+
+    .asset-icon {
+      display: grid;
+      place-items: center;
+      font-size: 42px;
+      opacity: .85;
+    }
+
+    .asset-icon .mi {
+      font-size: 42px;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0 8px;
+      color: #796262;
+    }
+
+    .field, textarea, select {
+      width: 100%;
+      border: 1px solid var(--line-dark);
+      background: var(--field);
+      min-height: 44px;
+      padding: 10px 13px;
+      outline: none;
+      border-radius: 0;
+    }
+
+    textarea {
+      min-height: 64px;
+      resize: vertical;
+    }
+
+    .input-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section {
+      border-top: 1px solid var(--line);
+      margin-top: 24px;
+      padding-top: 20px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+
+    .tree-card,
+    .profile-card,
+    .mapping-card,
+    .rule-card {
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .tree-card {
+      min-height: 210px;
+    }
+
+    .tree-question {
+      display: grid;
+      grid-template-columns: 30px 1fr auto;
+      align-items: start;
+      gap: 8px;
+    }
+
+    .number {
+      font-weight: 700;
+      color: #111;
+      text-align: right;
+      padding-top: 3px;
+    }
+
+    .question-title {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 22px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .tree-card.collapsed {
+      min-height: auto;
+      padding: 12px 18px;
+    }
+
+    .tree-card.collapsed .answer-node,
+    .tree-card.collapsed .nested-question {
+      display: none;
+    }
+
+    .tree-card.collapsed .question-title {
+      margin-bottom: 0;
+    }
+
+    .answer-node {
+      position: relative;
+      margin: 0 0 10px 8px;
+      border: 1px solid #d2d8da;
+      min-height: 38px;
+      display: flex;
+      align-items: center;
+      padding: 7px 12px;
+      gap: 10px;
+      background: #fff;
+    }
+
+    .branch-dot {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      border: 2px solid #004f84;
+      display: inline-grid;
+      place-items: center;
+      color: #004f84;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .branch-dot.gray {
+      background: #d1d6d8;
+      border-color: #d1d6d8;
+    }
+
+    .nested-question {
+      margin-left: 30px;
+      border: 1px solid #d2d8da;
+      min-height: 38px;
+      display: grid;
+      grid-template-columns: 26px 1fr auto;
+      align-items: center;
+      padding: 7px 10px;
+      gap: 8px;
+    }
+
+    .mini-add {
+      background: #004f84;
+      color: #fff;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 0;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      min-height: 0;
+      font-size: 13px;
+    }
+
+    .pill {
+      background: #d8e0e3;
+      color: #52606a;
+      padding: 4px 5px;
+      font-size: 11px;
+      border-radius: 2px;
+    }
+
+    .meta-icons {
+      color: #6f777a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      position: relative;
+    }
+
+    .meta-icons .mi:last-child {
+      cursor: pointer;
+    }
+
+    .context-menu {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background: #fff;
+      border: 1px solid #d2dbde;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+      border-radius: 2px;
+      min-width: 120px;
+      display: none;
+      z-index: 100;
+      margin-top: 4px;
+    }
+
+    .context-menu.open {
+      display: block;
+    }
+
+    .context-menu button {
+      display: block;
+      width: 100%;
+      padding: 10px 16px;
+      border: 0;
+      background: transparent;
+      text-align: left;
+      color: #041d4a;
+      font-size: 14px;
+      cursor: pointer;
+      min-height: auto;
+    }
+
+    .context-menu button:hover {
+      background: #f5f7f7;
+    }
+
+    .context-menu button:first-child {
+      border-bottom: 1px solid #e8ecf0;
+    }
+
+    .danger {
+      border-color: var(--danger) !important;
+      background: var(--danger-bg) !important;
+    }
+
+    .error {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      color: var(--danger);
+      font-size: 13px;
+      margin-top: 6px;
+    }
+
+    .profile-card {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 14px;
+    }
+
+    .profile-body {
+      border: 1px solid var(--line);
+      padding: 16px 18px;
+    }
+
+    .profile-title {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 14px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .profile-card.collapsed {
+      padding: 12px 18px;
+    }
+
+    .profile-card.collapsed .profile-body {
+      padding: 8px 0;
+      border: none;
+    }
+
+    .profile-card.collapsed .profile-title {
+      margin-bottom: 0;
+    }
+
+    .profile-card.collapsed .profile-body > *:not(.profile-title) {
+      display: none;
+    }
+
+    .rule-card {
+      background: #fbfcfc;
+      padding: 18px;
+    }
+
+    .rule-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      align-items: start;
+      margin-top: 12px;
+    }
+
+    .choice-panel {
+      border: 1px solid var(--line);
+      background: #f5f7f7;
+      min-height: 238px;
+      padding: 8px;
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      padding: 0 0 8px;
+      margin-bottom: 8px;
+    }
+
+    .search {
+      position: relative;
+    }
+
+    .search input {
+      padding-right: 40px;
+    }
+
+    .search span {
+      position: absolute;
+      right: 13px;
+      top: 12px;
+      color: #53717f;
+      font-size: 18px;
+    }
+
+    .answer-choice,
+    .selected-choice {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 9px 10px;
+      background: #fff;
+      min-height: 40px;
+    }
+
+    .answer-choice:nth-child(odd) {
+      background: #e9eeee;
+    }
+
+    .selected-choice {
+      justify-content: space-between;
+      border: 1px solid var(--line);
+      margin-top: 8px;
+    }
+
+    .note {
+      background: #eef8fc;
+      color: #4c6576;
+      padding: 12px;
+      margin-top: 12px;
+    }
+
+    .mapping-card h3 {
+      margin-bottom: 18px;
+    }
+
+    .mapping-grid {
+      display: grid;
+      grid-template-columns: minmax(180px, 1fr) minmax(220px, 2fr);
+      gap: 12px;
+      align-items: center;
+    }
+
+    .side-tools {
+      position: fixed;
+      right: 26px;
+      top: 57%;
+      border: 1px solid #d2dbde;
+      box-shadow: 0 4px 12px rgba(0,0,0,.16);
+      z-index: 4;
+    }
+
+    .side-tools button {
+      display: block;
+      width: 46px;
+      height: 44px;
+      border: 0;
+      border-bottom: 1px solid #d2dbde;
+      color: #8da1a7;
+      font-size: 20px;
+    }
+
+    .side-tools button.active {
+      background: var(--teal);
+      color: #fff;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.78);
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 76px 16px 40px;
+      z-index: 10;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      width: min(810px, calc(100vw - 32px));
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .modal-header {
+      height: 54px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+    }
+
+    .modal-title {
+      font-size: 24px;
+      color: #07315f;
+      font-weight: 400;
+    }
+
+    .icon-button {
+      width: 32px;
+      height: 32px;
+      padding: 0;
+      display: inline-grid;
+      place-items: center;
+      border: 0;
+      background: transparent;
+      font-size: 24px;
+      color: #586366;
+    }
+
+    .icon-only {
+      display: inline-grid;
+      place-items: center;
+    }
+
+    .modal-body {
+      padding: 28px 32px;
+    }
+
+    .answer-option {
+      display: grid;
+      grid-template-columns: 22px 1fr auto auto;
+      gap: 9px;
+      align-items: center;
+      margin: 10px 0;
+    }
+
+    .add-square {
+      width: 29px;
+      height: 29px;
+      min-height: 0;
+      padding: 0;
+      display: grid;
+      place-items: center;
+      background: var(--teal);
+      color: #fff;
+      border-color: var(--teal);
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 12px;
+      padding: 0 32px 28px;
+    }
+
+    .saved-info {
+      position: absolute;
+      width: 292px;
+      background: #fff;
+      box-shadow: 0 5px 18px rgba(0,0,0,.18);
+      padding: 20px;
+      display: none;
+      z-index: 12;
+      color: #2a1a22;
+    }
+
+    .saved-info.open {
+      display: block;
+    }
+
+    .saved-info button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    .toast {
+      position: fixed;
+      right: 26px;
+      bottom: 26px;
+      min-width: 260px;
+      background: #12354c;
+      color: #fff;
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+      transform: translateY(90px);
+      opacity: 0;
+      transition: .2s ease;
+      z-index: 20;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    @media (max-width: 900px) {
+      .brand-row {
+        height: auto;
+        padding: 16px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+
+      .actions {
+        justify-content: flex-end;
+        flex-wrap: wrap;
+      }
+
+      .nav-row {
+        justify-content: flex-start;
+      }
+
+      .page {
+        padding: 18px 12px 80px;
+      }
+
+      h1 { font-size: 30px; }
+
+      .image-row,
+      .rule-layout,
+      .mapping-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .asset-box {
+        max-width: 240px;
+      }
+
+      .profile-card {
+        grid-template-columns: 1fr;
+      }
+
+      .side-tools {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand-row">
+      <div class="brand"><span class="mark">C</span><span>Design</span></div>
+      <div class="actions">
+        <button class="ghost icon-with-text" id="saveBtn" disabled title="Save"><span class="mi" aria-hidden="true">cloud_upload</span><span>Save</span></button>
+        <button class="outline-teal icon-with-text" id="checkInBtn" title="Check in"><span class="mi" aria-hidden="true">login</span><span>Check In</span></button>
+        <span>Ed.Hickey</span>
+        <span class="icon-with-text" title="User settings"><span class="mi" aria-hidden="true">manage_accounts</span></span>
+      </div>
+    </div>
+    <nav class="nav-row" aria-label="Course authoring areas">
+      <button class="nav-item">Getting Started <span class="mi" aria-hidden="true">expand_more</span></button>
+      <button class="nav-item">Create Course</button>
+      <button class="nav-item active">Adaptive <span class="mi" aria-hidden="true">expand_more</span></button>
+      <button class="nav-item">Knowledge Check</button>
+      <button class="nav-item">Disclosure</button>
+      <button class="nav-item">Gamification</button>
+      <button class="nav-item">Features</button>
+      <button class="nav-item">History</button>
+      <button class="solid-teal icon-with-text"><span class="mi" aria-hidden="true">publish</span><span>Publish Options</span><span class="mi" aria-hidden="true">expand_more</span></button>
+    </nav>
+  </header>
+
+  <main class="page">
+    <div class="course-name">Test</div>
+    <div class="title-row">
+      <h1>Adaptive: Role Profiler 2.0</h1>
+      <a class="config icon-with-text" href="#profiles"><span class="mi" aria-hidden="true">settings</span><span>Role Profiler Configuration</span></a>
+    </div>
+
+    <div class="question-line">
+      <span>Do you want enable the Role Profiler option for this course? <span class="mi" title="Help" aria-hidden="true">help</span></span>
+      <button class="toggle" id="enableProfilerToggle" data-toggle aria-pressed="true"><span class="knob"></span><span class="toggle-label">Yes</span></button>
+    </div>
+    <div class="profiler-content" id="profilerContent">
+    <div class="question-line">
+      <span>Do you want to add pages before Role Profiler questions?</span>
+      <button class="toggle off" data-toggle aria-pressed="false"><span class="knob"></span><span class="toggle-label">No</span></button>
+    </div>
+
+    <section class="rule">
+      <h2>Background Image</h2>
+      <div class="image-row">
+        <div>
+          <div class="asset-label">Desktop &amp; Tablet<br>(Landscape)</div>
+          <div class="asset-box">
+            <div class="asset-size">1920x1080px</div>
+            <div class="asset-icon"><span class="mi" aria-hidden="true">image</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="asset-label">Mobile &amp; Tablet<br>(Portrait)</div>
+          <div class="asset-box">
+            <div class="asset-size">680x260px</div>
+            <div class="asset-icon"><span class="mi" aria-hidden="true">image</span></div>
+          </div>
+        </div>
+        <div>
+          <label for="imageDesc">Image Description</label>
+          <textarea id="imageDesc" placeholder="Enter Image Description Here"></textarea>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Content</h2>
+      <label for="pageTitle">Title</label>
+      <input class="field" id="pageTitle" value="Page Title">
+      <div style="display:flex; justify-content:flex-end; margin:18px 0 6px;">
+        <button class="icon-with-text"><span class="mi" aria-hidden="true">volume_up</span><span>Add Audio</span></button>
+      </div>
+      <label for="pageDescription">Description</label>
+      <textarea id="pageDescription"></textarea>
+    </section>
+
+    <section class="section" id="questions">
+      <div class="section-head">
+        <h2>Questions</h2>
+        <button class="outline-teal" id="openQuestion">+ Add Question</button>
+      </div>
+      <div class="tree-card" id="questionTree">
+        <div class="tree-question">
+          <div class="number">1.</div>
+          <div>
+            <div class="question-title">Are you a manager?</div>
+            <div class="answer-node">
+              <span class="branch-dot">-</span>
+              <span>Yes</span>
+              <span class="mi" style="margin-left:auto;" aria-hidden="true">more_horiz</span>
+            </div>
+            <div class="nested-question">
+              <button class="mini-add" id="addNested" title="Add nested question">+</button>
+              <strong>Where are you based</strong>
+              <span class="pill">1.1</span>
+            </div>
+            <div class="answer-node">
+              <span class="branch-dot gray"></span>
+              <span>No</span>
+              <span class="mi" style="margin-left:auto;" aria-hidden="true">more_horiz</span>
+            </div>
+          </div>
+          <div class="meta-icons">
+            <span class="mi" aria-hidden="true">warning</span>
+            <span class="mi menu-trigger" aria-hidden="true">more_horiz</span>
+            <div class="context-menu">
+              <button class="edit-question"><span class="mi" aria-hidden="true" style="font-size: 16px; margin-right: 8px;">edit</span>Edit</button>
+              <button class="delete-question"><span class="mi" aria-hidden="true" style="font-size: 16px; margin-right: 8px;">delete</span>Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="profiles">
+      <div class="section-head">
+        <h2>Profiles</h2>
+        <button class="outline-teal" id="addProfile">+ Add Profile</button>
+      </div>
+      <div class="profile-card">
+        <div class="number">1.</div>
+        <div class="profile-body">
+          <div class="profile-title" id="profileHeading">Manager USA</div>
+          <label for="profileName">Profile Name</label>
+          <input class="field" id="profileName" value="Manager USA">
+          <label for="profileDesc">Profile Description</label>
+          <textarea id="profileDesc"></textarea>
+
+          <div class="rule-card">
+            <div class="section-head">
+              <h3>Rule 1</h3>
+              <div class="meta-icons"><span class="mi" aria-hidden="true">warning</span><span class="mi" aria-hidden="true">more_horiz</span></div>
+            </div>
+            <label for="ruleQuestion">Question</label>
+            <select class="danger" id="ruleQuestion">
+              <option value="">Select a question</option>
+              <option value="manager">1 : Are you a manager?</option>
+              <option value="based">1.1 : Where are you based</option>
+            </select>
+            <div class="error" id="questionError"><span class="mi" aria-hidden="true">info</span><span>Question is required</span></div>
+
+            <div class="rule-layout">
+              <div class="choice-panel">
+                <div class="panel-head">
+                  <div>
+                    <button class="solid-teal" id="addSelected">Add Selected</button>
+                    <button class="solid-teal" id="addAll">Add All</button>
+                  </div>
+                  <strong>Available (<span id="availableCount">2</span>)</strong>
+                </div>
+                <div class="search">
+                  <input class="field" id="answerSearch" placeholder="Search">
+                  <span class="mi" aria-hidden="true">search</span>
+                </div>
+                <div id="availableAnswers"></div>
+              </div>
+              <div>
+                <div class="choice-panel">
+                  <div class="panel-head">
+                    <button class="outline-teal" id="removeAll">Remove All</button>
+                    <strong>Selected (<span id="selectedCount">0</span>)</strong>
+                  </div>
+                  <div id="selectedAnswers"></div>
+                </div>
+                <label for="logicSelect">Select Logic <span class="mi" title="Help" aria-hidden="true">help</span></label>
+                <select class="danger" id="logicSelect">
+                  <option value="">Select a logic</option>
+                  <option>May contain any</option>
+                  <option>Must NOT contain any</option>
+                </select>
+                <div class="error" id="logicError"><span class="mi" aria-hidden="true">warning</span><span>Logic is required</span></div>
+              </div>
+            </div>
+            <div class="note">For a profile to match, all its rules must be met. Each rule is based on a question, and each question can only be used once in a profile. Add more rules if you want the profile to cover more questions.</div>
+            <div style="display:flex; justify-content:flex-end; margin-top:12px;">
+              <button class="ghost" id="addRule" disabled>+ Add Rule</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Profile Mapping</h2>
+      <div class="mapping-card">
+        <h3>Lesson 1 - Lesson 1</h3>
+        <div class="mapping-grid">
+          <label for="mapsTo">Maps to:</label>
+          <select id="mapsTo">
+            <option>Manager USA</option>
+            <option>Manager Europe</option>
+            <option>Default learner route</option>
+          </select>
+        </div>
+      </div>
+    </section>
+    </div>
+  </main>
+
+  <div class="side-tools" aria-label="Floating tools">
+    <button title="Upload"><span class="mi" aria-hidden="true">cloud_upload</span></button>
+    <button class="active" title="Preview"><span class="mi" aria-hidden="true">visibility</span></button>
+  </div>
+
+  <div class="modal-backdrop" id="questionModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="modal-title" id="modalTitle">Add Question</div>
+        <button class="icon-button" id="closeModal" aria-label="Close"><span class="mi" aria-hidden="true">close</span></button>
+      </div>
+      <div class="modal-body">
+        <p>Question Number <span id="questionNumber">1.2</span></p>
+        <label for="newQuestionTitle">Question Title</label>
+        <input class="field" id="newQuestionTitle" value="Are you a manager?">
+        <div class="saved-info" id="questionHints">
+          <button class="icon-button" id="closeHints"><span class="mi" aria-hidden="true">close</span></button>
+          <strong>Saved info</strong>
+          <p>Are you a manager?</p>
+          <p>Are you based in the US?</p>
+        </div>
+        <label for="responseType">Response Type</label>
+        <select id="responseType">
+          <option>Learners can select only one answer</option>
+          <option>Learners can select multiple answers</option>
+        </select>
+        <label>Answer Options</label>
+        <div id="modalAnswers"></div>
+        <div class="answer-option">
+          <strong></strong>
+          <input class="field" id="newAnswer" placeholder="Answer Option">
+          <button class="add-square" id="addAnswer" title="Add answer option">+</button>
+          <span class="mi" title="Help" aria-hidden="true">help</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelModal">Cancel</button>
+        <button class="solid-teal" id="saveQuestion">Add Question</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const state = {
+      modalAnswers: ["USA", "Europe", "South America"],
+      selectedAnswers: [],
+      answerBank: {
+        "": ["Yes", "No"],
+        manager: ["Yes", "No"],
+        based: ["USA", "Europe", "South America"]
+      }
+    };
+
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => Array.from(document.querySelectorAll(selector));
+
+    function toast(message) {
+      const el = $("#toast");
+      el.textContent = message;
+      el.classList.add("show");
+      setTimeout(() => el.classList.remove("show"), 2200);
+    }
+
+    function markDirty() {
+      const save = $("#saveBtn");
+      save.disabled = false;
+      save.classList.remove("ghost");
+      save.classList.add("outline-teal");
+    }
+
+    function syncProfilerVisibility() {
+      const enabled = $("#enableProfilerToggle").getAttribute("aria-pressed") === "true";
+      $("#profilerContent").classList.toggle("hidden", !enabled);
+    }
+
+    function setToggleState(toggle, enabled) {
+      toggle.setAttribute("aria-pressed", String(enabled));
+      toggle.classList.toggle("off", !enabled);
+      toggle.querySelector(".toggle-label").textContent = enabled ? "Yes" : "No";
+    }
+
+    function renderAvailableAnswers() {
+      const query = $("#answerSearch").value.trim().toLowerCase();
+      const question = $("#ruleQuestion").value;
+      const source = state.answerBank[question].filter(item => !state.selectedAnswers.includes(item));
+      const visible = source.filter(item => item.toLowerCase().includes(query));
+      $("#availableCount").textContent = visible.length;
+      $("#availableAnswers").innerHTML = visible.map(item => `
+        <label class="answer-choice">
+          <input type="checkbox" value="${item}">
+          <span>${item}</span>
+        </label>
+      `).join("");
+      $("#selectedCount").textContent = state.selectedAnswers.length;
+      $("#selectedAnswers").innerHTML = state.selectedAnswers.map(item => `
+        <div class="selected-choice">
+          <span>${item}</span>
+          <button class="icon-button remove-answer" data-answer="${item}" title="Remove"><span class="mi" aria-hidden="true">close</span></button>
+        </div>
+      `).join("");
+    }
+
+    function validateRule() {
+      const hasQuestion = Boolean($("#ruleQuestion").value);
+      const hasLogic = Boolean($("#logicSelect").value);
+      $("#ruleQuestion").classList.toggle("danger", !hasQuestion);
+      $("#questionError").style.display = hasQuestion ? "none" : "flex";
+      $("#logicSelect").classList.toggle("danger", !hasLogic);
+      $("#logicError").style.display = hasLogic ? "none" : "flex";
+      $("#addRule").disabled = !(hasQuestion && hasLogic && state.selectedAnswers.length);
+      $("#addRule").classList.toggle("ghost", $("#addRule").disabled);
+      $("#addRule").classList.toggle("outline-teal", !$("#addRule").disabled);
+    }
+
+    function renderModalAnswers() {
+      $("#modalAnswers").innerHTML = state.modalAnswers.map((item, index) => `
+        <div class="answer-option">
+          <strong>${index + 1}</strong>
+          <input class="field modal-answer-input" value="${item}" data-index="${index}">
+          <button class="icon-button remove-modal-answer" data-index="${index}" title="Remove answer"><span class="mi" aria-hidden="true">close</span></button>
+          <span class="mi" title="Warning" aria-hidden="true">warning</span>
+        </div>
+      `).join("");
+    }
+
+    function openModal(number = "1.2", title = "Are you a manager?", answers = ["Yes", "No"]) {
+      $("#questionNumber").textContent = number;
+      $("#newQuestionTitle").value = title;
+      state.modalAnswers = [...answers];
+      renderModalAnswers();
+      $("#questionModal").classList.add("open");
+      $("#newQuestionTitle").focus();
+    }
+
+    function closeModal() {
+      $("#questionModal").classList.remove("open");
+      $("#questionHints").classList.remove("open");
+    }
+
+    $$("[data-toggle]").forEach(toggle => {
+      toggle.addEventListener("click", () => {
+        const isOn = toggle.getAttribute("aria-pressed") === "true";
+        setToggleState(toggle, !isOn);
+        if (toggle.id === "enableProfilerToggle") syncProfilerVisibility();
+        markDirty();
+      });
+    });
+
+    $$(".question-title").forEach(title => {
+      title.addEventListener("click", () => {
+        const treeQuestion = title.closest(".tree-question");
+        const treeCard = treeQuestion.closest(".tree-card");
+        treeCard.classList.toggle("collapsed");
+      });
+    });
+
+    $$(".profile-title").forEach(title => {
+      title.addEventListener("click", () => {
+        const profileBody = title.closest(".profile-body");
+        const profileCard = profileBody.closest(".profile-card");
+        profileCard.classList.toggle("collapsed");
+      });
+    });
+
+    $$(".menu-trigger").forEach(trigger => {
+      trigger.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const contextMenu = trigger.closest(".meta-icons").querySelector(".context-menu");
+        $$(".context-menu").forEach(menu => {
+          if (menu !== contextMenu) menu.classList.remove("open");
+        });
+        contextMenu.classList.toggle("open");
+      });
+    });
+
+    $$(".context-menu button").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (btn.classList.contains("edit-question")) {
+          toast("Edit question");
+        } else if (btn.classList.contains("delete-question")) {
+          toast("Delete question");
+        }
+        btn.closest(".context-menu").classList.remove("open");
+      });
+    });
+
+    document.addEventListener("click", () => {
+      $$(".context-menu").forEach(menu => menu.classList.remove("open"));
+    });
+
+    $("#openQuestion").addEventListener("click", () => openModal("1.2", "Question Title 1", ["Answer Option 1"]));
+    $("#addNested").addEventListener("click", () => openModal("1.1", "Where are you based", ["USA", "Europe", "South America"]));
+    $("#closeModal").addEventListener("click", closeModal);
+    $("#cancelModal").addEventListener("click", closeModal);
+    $("#questionModal").addEventListener("click", event => {
+      if (event.target.id === "questionModal") closeModal();
+    });
+
+    $("#newQuestionTitle").addEventListener("input", event => {
+      const hints = $("#questionHints");
+      if (event.target.value.length > 4) {
+        const rect = event.target.getBoundingClientRect();
+        hints.style.left = `${rect.left + 64}px`;
+        hints.style.top = `${rect.bottom}px`;
+        hints.classList.add("open");
+      } else {
+        hints.classList.remove("open");
+      }
+      markDirty();
+    });
+    $("#closeHints").addEventListener("click", () => $("#questionHints").classList.remove("open"));
+
+    $("#addAnswer").addEventListener("click", () => {
+      const input = $("#newAnswer");
+      const value = input.value.trim();
+      if (!value) {
+        input.classList.add("danger");
+        return;
+      }
+      input.classList.remove("danger");
+      state.modalAnswers.push(value);
+      input.value = "";
+      renderModalAnswers();
+      markDirty();
+    });
+
+    $("#modalAnswers").addEventListener("click", event => {
+      const button = event.target.closest(".remove-modal-answer");
+      if (!button) return;
+      state.modalAnswers.splice(Number(button.dataset.index), 1);
+      renderModalAnswers();
+      markDirty();
+    });
+
+    $("#modalAnswers").addEventListener("input", event => {
+      if (!event.target.matches(".modal-answer-input")) return;
+      state.modalAnswers[Number(event.target.dataset.index)] = event.target.value;
+      markDirty();
+    });
+
+    $("#saveQuestion").addEventListener("click", () => {
+      const title = $("#newQuestionTitle").value.trim();
+      if (!title || !state.modalAnswers.length) {
+        toast("Add a question title and at least one answer option.");
+        return;
+      }
+      toast(`Question saved: ${title}`);
+      closeModal();
+      markDirty();
+    });
+
+    $("#ruleQuestion").addEventListener("change", () => {
+      state.selectedAnswers = [];
+      renderAvailableAnswers();
+      validateRule();
+      markDirty();
+    });
+
+    $("#logicSelect").addEventListener("change", () => {
+      validateRule();
+      markDirty();
+    });
+
+    $("#answerSearch").addEventListener("input", renderAvailableAnswers);
+
+    $("#addSelected").addEventListener("click", () => {
+      $$("#availableAnswers input:checked").forEach(box => {
+        if (!state.selectedAnswers.includes(box.value)) state.selectedAnswers.push(box.value);
+      });
+      renderAvailableAnswers();
+      validateRule();
+      markDirty();
+    });
+
+    $("#addAll").addEventListener("click", () => {
+      const question = $("#ruleQuestion").value;
+      state.answerBank[question].forEach(item => {
+        if (!state.selectedAnswers.includes(item)) state.selectedAnswers.push(item);
+      });
+      renderAvailableAnswers();
+      validateRule();
+      markDirty();
+    });
+
+    $("#removeAll").addEventListener("click", () => {
+      state.selectedAnswers = [];
+      renderAvailableAnswers();
+      validateRule();
+      markDirty();
+    });
+
+    $("#selectedAnswers").addEventListener("click", event => {
+      const button = event.target.closest(".remove-answer");
+      if (!button) return;
+      state.selectedAnswers = state.selectedAnswers.filter(item => item !== button.dataset.answer);
+      renderAvailableAnswers();
+      validateRule();
+      markDirty();
+    });
+
+    $("#addProfile").addEventListener("click", () => toast("New profile panel added in the authoring flow."));
+    $("#addRule").addEventListener("click", () => toast("Rule added."));
+    $("#checkInBtn").addEventListener("click", () => toast("Course checked in."));
+    $("#saveBtn").addEventListener("click", () => {
+      $("#saveBtn").disabled = true;
+      $("#saveBtn").classList.add("ghost");
+      $("#saveBtn").classList.remove("outline-teal");
+      toast("Changes saved.");
+    });
+
+    $("#profileName").addEventListener("input", event => {
+      $("#profileHeading").textContent = event.target.value || "Profile Name 1";
+      markDirty();
+    });
+
+    $$("input, textarea, select").forEach(el => {
+      el.addEventListener("input", markDirty);
+    });
+
+    renderAvailableAnswers();
+    validateRule();
+    $$("[data-toggle]").forEach(toggle => {
+      setToggleState(toggle, toggle.getAttribute("aria-pressed") === "true");
+    });
+    syncProfilerVisibility();
+  </script>
+</body>
+</html>
