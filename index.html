@@ -388,6 +388,27 @@
       margin-bottom: 22px;
       cursor: pointer;
       user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .expand-icon {
+      font-family: "Material Symbols Outlined";
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      font-size: 20px;
+      color: #004f84;
+      flex-shrink: 0;
+      line-height: 1;
+      display: inline-block;
+    }
+
+    .tree-card.collapsed .expand-icon::after {
+      content: "add_circle";
+    }
+
+    .tree-card:not(.collapsed) .expand-icon::after {
+      content: "remove_circle";
     }
 
     .tree-card.collapsed {
@@ -416,21 +437,31 @@
       background: #fff;
     }
 
-    .branch-dot {
+    .branch-dot.gray {
       width: 15px;
       height: 15px;
       border-radius: 50%;
-      border: 2px solid #004f84;
-      display: inline-grid;
-      place-items: center;
-      color: #004f84;
-      font-size: 12px;
-      font-weight: 700;
+      background: #d1d6d8;
+      border: 2px solid #d1d6d8;
+      display: inline-block;
+      flex-shrink: 0;
     }
 
-    .branch-dot.gray {
-      background: #d1d6d8;
-      border-color: #d1d6d8;
+    .branch-expand {
+      color: #004f84;
+      font-size: 20px;
+      line-height: 1;
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    .answer-node.has-followup {
+      cursor: pointer;
+    }
+
+    .nested-question strong {
+      cursor: pointer;
+      user-select: none;
     }
 
     .nested-question {
@@ -445,17 +476,33 @@
     }
 
     .mini-add {
-      background: #004f84;
-      color: #fff;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
+      background: transparent;
+      color: #004f84;
+      width: 20px;
+      height: 20px;
       border: 0;
       padding: 0;
       display: grid;
       place-items: center;
       min-height: 0;
-      font-size: 13px;
+      font-family: "Material Symbols Outlined";
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .nested-options {
+      margin: 8px 0 8px 38px;
+      display: none;
+    }
+
+    .nested-options.open {
+      display: block;
+    }
+
+    .nested-options .answer-node {
+      margin: 0 0 8px;
     }
 
     .pill {
@@ -647,9 +694,68 @@
       margin-bottom: 18px;
     }
 
+    .mapping-card {
+      padding: 0;
+    }
+
+    .mapping-card-header {
+      width: 100%;
+      border: 0;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      text-align: left;
+      min-height: 0;
+      color: var(--ink);
+    }
+
+    .mapping-card-header:hover {
+      background: #f8fafb;
+    }
+
+    .mapping-number {
+      min-width: 22px;
+      font-weight: 700;
+      color: #111;
+      text-align: right;
+    }
+
+    .mapping-lesson-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0d2f5f;
+    }
+
+    .mapping-summary {
+      color: #4f5e69;
+      font-style: italic;
+      margin-left: 2px;
+      display: none;
+    }
+
+    .mapping-collapse-icon {
+      margin-left: auto;
+      color: #526772;
+      font-size: 20px;
+    }
+
+    .mapping-card-body {
+      padding: 0 18px 18px;
+    }
+
+    .mapping-card.collapsed .mapping-card-body {
+      display: none;
+    }
+
+    .mapping-card.collapsed .mapping-summary {
+      display: inline;
+    }
+
     .mapping-grid {
       display: grid;
-      grid-template-columns: minmax(180px, 1fr) minmax(220px, 2fr);
+      grid-template-columns: 74px minmax(240px, 1fr);
       gap: 12px;
       align-items: center;
     }
@@ -677,15 +783,40 @@
     }
 
     .mapping-selected {
-      display: flex;
-      gap: 8px;
+      display: inline-flex;
+      gap: 10px;
       align-items: center;
-      flex-wrap: wrap;
-      min-height: 28px;
+      min-height: 24px;
+      overflow: hidden;
     }
 
     .mapping-placeholder {
       color: #6f7f86;
+    }
+
+    .mapping-selected-inline {
+      color: #0f2946;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: min(700px, 70vw);
+    }
+
+    .mapping-selected-count {
+      border: 1px solid #8fa0a9;
+      border-radius: 999px;
+      padding: 2px 12px;
+      font-size: 13px;
+      color: #122f4b;
+      background: #f7fafb;
+      white-space: nowrap;
+    }
+
+    .mapping-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
     }
 
     .mapping-chip {
@@ -693,8 +824,8 @@
       align-items: center;
       gap: 6px;
       border: 1px solid #8a9ba1;
-      background: #f2f6f7;
-      padding: 4px 10px;
+      background: #fff;
+      padding: 5px 10px;
       font-size: 13px;
       white-space: nowrap;
     }
@@ -882,6 +1013,282 @@
       padding: 0 32px 28px;
     }
 
+    .page-footer-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 28px;
+    }
+
+    .validate-modal {
+      width: min(880px, calc(100vw - 32px));
+      max-height: calc(100vh - 120px);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .validate-modal .modal-body {
+      overflow: auto;
+      padding-top: 20px;
+      flex: 1;
+    }
+
+    .validate-scanning {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 36px 0;
+      color: #4f6570;
+      font-size: 15px;
+    }
+
+    .validate-scanning .mi {
+      font-size: 26px;
+      color: var(--teal);
+      animation: val-spin 1s linear infinite;
+    }
+
+    @keyframes val-spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .validate-pass {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 24px;
+      background: #f2fbf7;
+      border: 1px solid #a8dfc5;
+      color: #1a4d32;
+    }
+
+    .validate-pass .mi { font-size: 32px; color: #27a65d; flex-shrink: 0; }
+    .validate-pass p   { margin: 6px 0 0; }
+
+    .validate-summary {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+      padding: 12px 14px;
+      background: #fff8ec;
+      border: 1px solid #f0c86a;
+    }
+
+    .validate-summary-stats { display: flex; gap: 8px; flex-shrink: 0; }
+
+    .validate-stat-badge {
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      border-radius: 2px;
+    }
+
+    .validate-stat-badge.error   { background: var(--danger-bg); color: var(--danger); border: 1px solid #f5a0b0; }
+    .validate-stat-badge.warning { background: #fff3d6; color: #7a4b00; border: 1px solid #f0c86a; }
+
+    .validate-summary-text { margin: 0; color: #5a4200; font-size: 14px; }
+
+    .validate-issues-list { display: flex; flex-direction: column; gap: 14px; }
+
+    .validate-issue {
+      border: 1px solid var(--line);
+      background: #fff;
+      padding: 16px 18px;
+    }
+
+    .validate-issue.error   { border-left: 4px solid var(--danger); }
+    .validate-issue.warning { border-left: 4px solid #e8a000; }
+
+    .validate-issue-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .validate-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      flex-shrink: 0;
+    }
+
+    .validate-badge .mi    { font-size: 14px; }
+    .validate-badge.error  { background: var(--danger-bg); color: var(--danger); }
+    .validate-badge.warning{ background: #fff3d6; color: #7a4b00; }
+
+    .validate-location {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: #2d4f62;
+      font-size: 13px;
+      font-style: italic;
+    }
+
+    .validate-location .mi { font-size: 14px; color: #526772; }
+
+    .validate-issue-detail { color: #3c4e58; font-size: 14px; line-height: 1.65; }
+
+    .validate-conflict-profiles {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .validate-profile-chip { padding: 5px 10px; font-size: 13px; font-weight: 600; border: 1px solid; }
+    .validate-profile-chip.a { background: #edf4ff; border-color: #a8c4ee; color: #143a73; }
+    .validate-profile-chip.b { background: #f8f2ff; border-color: #c9aff5; color: #6332a5; }
+    .validate-conflict-arrow { color: #8fa0a9; font-size: 20px; }
+
+    .page-level-lesson {
+      margin: 0 0 14px;
+      color: #315067;
+      font-size: 15px;
+    }
+
+    .page-level-section-title {
+      margin: 0 0 8px;
+      font-size: 16px;
+      color: #09255c;
+    }
+
+    .page-level-list {
+      border: 1px solid var(--line);
+      background: #fbfdfd;
+      padding: 8px 12px;
+      max-height: 260px;
+      overflow: auto;
+      margin-bottom: 18px;
+    }
+
+    .page-level-list ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .page-level-item {
+      padding: 8px 0;
+      border-bottom: 1px solid #edf2f3;
+      color: #142c41;
+    }
+
+    .page-level-item:last-child {
+      border-bottom: 0;
+    }
+
+    .page-level-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .page-level-page-icon {
+      font-size: 16px;
+      color: #3a5367;
+    }
+
+    .page-level-page-title {
+      flex: 1;
+      min-width: 0;
+      padding-top: 1px;
+      color: #142c41;
+    }
+
+    .page-level-page-actions {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .page-level-page-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+      padding-left: 24px;
+    }
+
+    .page-level-add {
+      width: 24px;
+      height: 24px;
+      min-height: 24px;
+      padding: 0;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid var(--teal-dark);
+      background: var(--teal-dark);
+      color: #fff;
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .page-level-picker {
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      min-width: 180px;
+      background: #fff;
+      border: 1px solid var(--line);
+      box-shadow: 0 5px 18px rgba(0,0,0,.14);
+      z-index: 15;
+      display: none;
+      max-height: 220px;
+      overflow: auto;
+    }
+
+    .page-level-picker.open {
+      display: block;
+    }
+
+    .page-level-picker button {
+      display: block;
+      width: 100%;
+      border: 0;
+      background: #fff;
+      color: #102843;
+      text-align: left;
+      padding: 10px 12px;
+      min-height: 0;
+      border-bottom: 1px solid #edf2f3;
+    }
+
+    .page-level-picker button:last-child {
+      border-bottom: 0;
+    }
+
+    .page-level-picker button:hover {
+      background: #f6fafb;
+    }
+
+    .page-level-profiles {
+      min-height: 40px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 4px 0;
+    }
+
+    .page-level-empty {
+      color: #5d707d;
+      font-size: 13px;
+      font-style: italic;
+    }
+
     .saved-info {
       position: absolute;
       width: 292px;
@@ -963,6 +1370,20 @@
 
       .side-tools {
         display: none;
+      }
+
+      .page-footer-actions {
+        justify-content: stretch;
+      }
+
+      .page-footer-actions button {
+        width: 100%;
+      }
+
+      .visual-answer-branch,
+      .visual-question-card {
+        min-width: 0;
+        max-width: none;
       }
     }
   </style>
@@ -1046,15 +1467,15 @@
     <section class="section" id="questions">
       <div class="section-head">
         <h2>Questions</h2>
-        <button class="outline-teal" id="openQuestion">+ Add Question</button>
+        <button class="outline-teal" id="openQuestion" style="margin-top: 16px;">+ Add Question</button>
       </div>
       <div class="tree-card" id="questionTree">
         <div class="tree-question">
           <div class="number">1.</div>
           <div>
-            <div class="question-title">Are you a manager?</div>
-            <div class="answer-node">
-              <span class="branch-dot">-</span>
+            <div class="question-title"><span class="expand-icon" aria-hidden="true"></span>Are you a manager?</div>
+            <div class="answer-node has-followup">
+              <span class="mi branch-expand">remove_circle</span>
               <span>Yes</span>
               <div class="meta-icons" style="margin-left:auto;">
                 <span class="mi menu-trigger" aria-hidden="true">more_horiz</span>
@@ -1063,8 +1484,8 @@
                 </div>
               </div>
             </div>
-            <div class="nested-question">
-              <button class="mini-add" id="addNested" title="Add nested question">+</button>
+            <div class="nested-question" data-question-key="based">
+              <button class="mini-add" id="addNested" title="Show answer options" aria-expanded="false" aria-controls="nestedOptions1">add_circle</button>
               <strong>Where are you based</strong>
               <span class="pill">1.1</span>
               <div class="meta-icons">
@@ -1073,6 +1494,28 @@
                   <button class="edit-question"><span class="mi" aria-hidden="true" style="font-size: 16px; margin-right: 8px;">edit</span>Edit</button>
                   <button class="delete-question"><span class="mi" aria-hidden="true" style="font-size: 16px; margin-right: 8px;">delete</span>Delete</button>
                 </div>
+              </div>
+            </div>
+            <div class="nested-options" id="nestedOptions1">
+              <div class="answer-node">
+                <span class="branch-dot gray"></span>
+                <span>North America</span>
+              </div>
+              <div class="answer-node">
+                <span class="branch-dot gray"></span>
+                <span>Europe</span>
+              </div>
+              <div class="answer-node">
+                <span class="branch-dot gray"></span>
+                <span>South America</span>
+              </div>
+              <div class="answer-node">
+                <span class="branch-dot gray"></span>
+                <span>Asia</span>
+              </div>
+              <div class="answer-node">
+                <span class="branch-dot gray"></span>
+                <span>Other</span>
               </div>
             </div>
             <div class="answer-node">
@@ -1102,7 +1545,6 @@
     <section class="section" id="profiles">
       <div class="section-head">
         <h2>Profiles</h2>
-        <button class="outline-teal" id="addProfile">+ Add Profile</button>
       </div>
       <div class="profile-card">
         <div class="number">1.</div>
@@ -1165,24 +1607,65 @@
           </div>
         </div>
       </div>
+        <div style="display:flex; justify-content:flex-end; margin-top:12px;">
+          <button class="outline-teal" id="addProfile">+ Add Profile</button>
+        </div>
     </section>
 
     <section class="section">
       <h2>Profile Mapping</h2>
-      <div class="mapping-card">
-        <h3>Lesson 1 - Lesson 1</h3>
-        <div class="mapping-grid">
-          <label for="mapsTo">Maps to:</label>
-          <div class="mapping-control" id="mappingControl">
-            <button class="mapping-toggle" id="mapsTo" type="button" aria-haspopup="listbox" aria-expanded="false">
-              <span class="mapping-selected" id="mappingSelected"></span>
-              <span class="mi" aria-hidden="true">expand_more</span>
-            </button>
-            <div class="mapping-dropdown" id="mappingDropdown" role="listbox" aria-multiselectable="true"></div>
+      <div class="mapping-card" data-lesson-id="lesson1">
+        <button class="mapping-card-header" type="button" aria-expanded="true">
+          <span class="mapping-number">1.</span>
+          <span class="mapping-lesson-name">Lesson 1 - Lesson 1</span>
+          <span class="mapping-summary"></span>
+          <span class="mi mapping-collapse-icon" aria-hidden="true">expand_less</span>
+        </button>
+        <div class="mapping-card-body">
+          <div class="mapping-grid">
+            <label for="mapsToLesson1">Maps to:</label>
+            <div class="mapping-control" data-lesson-id="lesson1">
+              <button class="mapping-toggle" id="mapsToLesson1" type="button" aria-haspopup="listbox" aria-expanded="false">
+                <span class="mapping-selected"></span>
+                <span class="mi" aria-hidden="true">expand_more</span>
+              </button>
+              <div class="mapping-chip-row"></div>
+              <div class="mapping-dropdown" role="listbox" aria-multiselectable="true"></div>
+            </div>
+          </div>
+          <div style="display:flex; justify-content:flex-end; margin-top:12px;">
+            <button class="outline-teal page-level-btn" data-lesson-id="lesson1" type="button">Page Level</button>
+          </div>
+        </div>
+      </div>
+      <div class="mapping-card" data-lesson-id="lesson2">
+        <button class="mapping-card-header" type="button" aria-expanded="true">
+          <span class="mapping-number">2.</span>
+          <span class="mapping-lesson-name">Lesson 2 - Lesson 2</span>
+          <span class="mapping-summary"></span>
+          <span class="mi mapping-collapse-icon" aria-hidden="true">expand_less</span>
+        </button>
+        <div class="mapping-card-body">
+          <div class="mapping-grid">
+            <label for="mapsToLesson2">Maps to:</label>
+            <div class="mapping-control" data-lesson-id="lesson2">
+              <button class="mapping-toggle" id="mapsToLesson2" type="button" aria-haspopup="listbox" aria-expanded="false">
+                <span class="mapping-selected"></span>
+                <span class="mi" aria-hidden="true">expand_more</span>
+              </button>
+              <div class="mapping-chip-row"></div>
+              <div class="mapping-dropdown" role="listbox" aria-multiselectable="true"></div>
+            </div>
+          </div>
+          <div style="display:flex; justify-content:flex-end; margin-top:12px;">
+            <button class="outline-teal page-level-btn" data-lesson-id="lesson2" type="button">Page Level</button>
           </div>
         </div>
       </div>
     </section>
+    </div>
+    <div class="page-footer-actions">
+      <button class="solid-teal" id="openVisualize" type="button">Validate</button>
     </div>
   </main>
 
@@ -1201,12 +1684,6 @@
         <p>Question Number <span id="questionNumber">1.2</span></p>
         <label for="newQuestionTitle">Question Title</label>
         <input class="field" id="newQuestionTitle" value="Are you a manager?">
-        <div class="saved-info" id="questionHints">
-          <button class="icon-button" id="closeHints"><span class="mi" aria-hidden="true">close</span></button>
-          <strong>Saved info</strong>
-          <p>Are you a manager?</p>
-          <p>Are you based in the US?</p>
-        </div>
         <label for="responseType">Response Type</label>
         <select id="responseType">
           <option value="single">Learners can select only one answer</option>
@@ -1222,6 +1699,44 @@
     </div>
   </div>
 
+  <div class="modal-backdrop" id="pageLevelModal" role="dialog" aria-modal="true" aria-labelledby="pageLevelModalTitle">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title" id="pageLevelModalTitle">Page level profiling</div>
+        </div>
+        <button class="icon-button" id="closePageLevelModal" aria-label="Close"><span class="mi" aria-hidden="true">close</span></button>
+      </div>
+      <div class="modal-body">
+        <p class="page-level-lesson" id="pageLevelLessonName"></p>
+
+        <h3 class="page-level-section-title">Pages in this lesson</h3>
+        <div class="page-level-list">
+          <ul id="pageLevelPages"></ul>
+        </div>
+
+        <h3 class="page-level-section-title">Profiles currently associated with this lesson</h3>
+        <div class="page-level-profiles" id="pageLevelProfiles"></div>
+      </div>
+      <div class="modal-footer">
+        <button id="pageLevelDone" class="outline-teal">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="visualizeModal" role="dialog" aria-modal="true" aria-labelledby="visualizeModalTitle">
+    <div class="modal validate-modal">
+      <div class="modal-header">
+        <div class="modal-title" id="visualizeModalTitle">Validate Reachability</div>
+        <button class="icon-button" id="closeVisualizeModal" aria-label="Close"><span class="mi" aria-hidden="true">close</span></button>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button class="outline-teal" id="visualizeDone" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast"></div>
 
   <script>
@@ -1229,15 +1744,46 @@
       modalAnswers: ["USA", "Europe", "South America"],
       modalResponseType: "single",
       modalMode: "add",
+      modalTarget: null,
       selectedAnswers: [],
-      selectedMappings: ["Manager USA"],
+      followUpsByOption: {},
+      nextFollowUpPanelId: 2,
+      nextFollowUpId: 1,
+      selectedMappingsByLesson: {
+        lesson1: ["Manager USA"],
+        lesson2: []
+      },
+      pageLevelModalLessonId: null,
+      pageLevelAssignments: {
+        lesson1: {},
+        lesson2: {}
+      },
+      lessonPagesByLesson: {
+        lesson1: [
+          "1.The General Data Protection Regulation (Video)",
+          "2.The Key Players (Text and Graphic)",
+          "3.How Does the GDPR Protect Personal Data? (Select And Reveal)",
+          "4.What Can Antoine Do? (SAQ)",
+          "5.Remember... (Text and Graphic)",
+          "6.What Next? (SAQ)",
+          "7.Remember... (Text and Graphic)",
+          "8.Consequences (SAQ)",
+          "9.Thanks for helping Antoine. (Text and Graphic)",
+          "10.Processing Data (SAQ)",
+          "11.Thanks for helping Adrienne. (Text and Graphic)"
+        ],
+        lesson2: ["No pages configured."]
+      },
       answerBank: {
-        "": ["Yes", "No"],
-        manager: ["Yes", "No"],
-        based: ["USA", "Europe", "South America"]
+        "": [],
+        manager: [],
+        based: []
       },
       ruleCount: 1
     };
+
+    const ruleStateMap = new WeakMap();
+    const profileRuleCountMap = new WeakMap();
 
     const $ = (selector) => document.querySelector(selector);
     const $$ = (selector) => Array.from(document.querySelectorAll(selector));
@@ -1283,59 +1829,473 @@
       return Array.from(names);
     }
 
-    function renderProfileMapping() {
-      const selectedBar = $("#mappingSelected");
-      const dropdown = $("#mappingDropdown");
-      if (!selectedBar || !dropdown) return;
-
-      const options = getAvailableProfiles();
-      state.selectedMappings = state.selectedMappings.filter(item => options.includes(item));
-
-      if (!state.selectedMappings.length) {
-        selectedBar.innerHTML = '<span class="mapping-placeholder">Select profiles</span>';
-      } else {
-        selectedBar.innerHTML = state.selectedMappings.map(item => `
-          <span class="mapping-chip">
-            <span>${item}</span>
-            <button class="remove-map" data-profile="${item}" type="button" aria-label="Remove ${item}">×</button>
-          </span>
-        `).join("");
+    function getRuleState(ruleCard) {
+      if (!ruleStateMap.has(ruleCard)) {
+        ruleStateMap.set(ruleCard, { selectedAnswers: [] });
       }
-
-      dropdown.innerHTML = options.map(item => {
-        const checked = state.selectedMappings.includes(item) ? "checked" : "";
-        return `
-          <label class="mapping-option">
-            <input type="checkbox" data-map-option="${item}" ${checked}>
-            <span>${item}</span>
-          </label>
-        `;
-      }).join("");
+      return ruleStateMap.get(ruleCard);
     }
 
-    function setMappingOpen(open) {
-      const dropdown = $("#mappingDropdown");
-      const toggle = $("#mapsTo");
+    function getProfileRuleCount(profileCard) {
+      if (!profileRuleCountMap.has(profileCard)) {
+        profileRuleCountMap.set(profileCard, 1);
+      }
+      return profileRuleCountMap.get(profileCard);
+    }
+
+    function getPrimaryRuleCard() {
+      return document.querySelector(".profile-card .rule-card");
+    }
+
+    function setProfileRuleCount(profileCard, count) {
+      profileRuleCountMap.set(profileCard, count);
+    }
+
+    function getMainQuestionAnswers() {
+      const root = document.querySelector("#questionTree .tree-question > div:nth-child(2)");
+      if (!root) return [];
+
+      return Array.from(root.children)
+        .filter(node => node.classList?.contains("answer-node"))
+        .map(node => node.querySelector("span:nth-child(2)")?.textContent?.trim() || "")
+        .filter(Boolean);
+    }
+
+    function getNestedQuestionAnswers(questionKey) {
+      const nested = document.querySelector(`.nested-question[data-question-key="${questionKey}"]`);
+      if (!nested) return [];
+
+      const optionsId = nested.querySelector(".mini-add")?.getAttribute("aria-controls");
+      const panel = optionsId ? document.getElementById(optionsId) : null;
+      if (!panel) return [];
+
+      return Array.from(panel.querySelectorAll(".answer-node > span:nth-child(2)"))
+        .map(el => el.textContent.trim())
+        .filter(Boolean);
+    }
+
+    function getQuestionsFromTree() {
+      const questions = [];
+      $$(".tree-card .tree-question").forEach((tq, tqIdx) => {
+        const numRaw = tq.querySelector(".number")?.textContent?.trim()?.replace(".", "") || String(tqIdx + 1);
+        const title = tq.querySelector(".question-title")?.textContent?.trim() || "";
+        const contentDiv = tq.querySelector(".tree-question > div:nth-child(2)") || tq.children[1];
+        const rootAnswers = contentDiv
+          ? Array.from(contentDiv.children)
+              .filter(n => n.classList?.contains("answer-node"))
+              .map(n => n.querySelector("span:nth-child(2)")?.textContent?.trim() || "")
+              .filter(Boolean)
+          : [];
+        questions.push({ key: "manager", label: `${numRaw} : ${title}`, answers: rootAnswers });
+
+        tq.querySelectorAll(".nested-question").forEach(nq => {
+          const pill = nq.querySelector(".pill")?.textContent?.trim() || "";
+          const nqTitle = nq.querySelector("strong")?.textContent?.trim() || "";
+          const panelId = nq.querySelector(".mini-add")?.getAttribute("aria-controls");
+          const panel = panelId ? document.getElementById(panelId) : null;
+          const answers = panel
+            ? Array.from(panel.querySelectorAll(".answer-node > span:nth-child(2)"))
+                .map(el => el.textContent.trim()).filter(Boolean)
+            : [];
+          const key = nq.dataset.questionKey || nq.dataset.followupId || pill.replace(".", "_");
+          questions.push({ key, label: `${pill} : ${nqTitle}`, answers });
+        });
+      });
+      return questions;
+    }
+
+    function syncAnswerBankFromTree() {
+      const questions = getQuestionsFromTree();
+      state.answerBank = { "": [] };
+      questions.forEach(q => { state.answerBank[q.key] = q.answers; });
+      if (questions.length) state.answerBank[""] = questions[0].answers;
+    }
+
+    function syncRuleQuestionDropdowns() {
+      const questions = getQuestionsFromTree();
+      $$(".rule-card #ruleQuestion").forEach(select => {
+        const currentVal = select.value;
+        select.innerHTML = '<option value="">Select a question</option>' +
+          questions.map(q => `<option value="${q.key}">${q.label}</option>`).join("");
+        if (questions.some(q => q.key === currentVal)) select.value = currentVal;
+      });
+    }
+
+    function getLessonMappings(lessonId) {
+      if (!Array.isArray(state.selectedMappingsByLesson[lessonId])) {
+        state.selectedMappingsByLesson[lessonId] = [];
+      }
+      return state.selectedMappingsByLesson[lessonId];
+    }
+
+    function updateMappingCardSummary(mappingControl, selectedCount) {
+      const mappingCard = mappingControl.closest(".mapping-card");
+      const summary = mappingCard?.querySelector(".mapping-summary");
+      if (!summary) return;
+      summary.textContent = `(${selectedCount} profile${selectedCount === 1 ? "" : "s"} selected)`;
+    }
+
+    function getLessonName(lessonId) {
+      const lessonCard = document.querySelector(`.mapping-card[data-lesson-id="${lessonId}"]`);
+      return lessonCard?.querySelector(".mapping-lesson-name")?.textContent?.trim() || lessonId;
+    }
+
+    function getLessonPageList(lessonId) {
+      return (state.lessonPagesByLesson[lessonId] || []).filter(page => page !== "No pages configured.");
+    }
+
+    function getPageAssignments(lessonId) {
+      if (!state.pageLevelAssignments[lessonId]) {
+        state.pageLevelAssignments[lessonId] = {};
+      }
+      return state.pageLevelAssignments[lessonId];
+    }
+
+    function getPageProfiles(lessonId, pageTitle) {
+      const assignments = getPageAssignments(lessonId);
+      if (!Array.isArray(assignments[pageTitle])) {
+        assignments[pageTitle] = [];
+      }
+      return assignments[pageTitle];
+    }
+
+    function removeProfileFromAllPages(lessonId, profileName) {
+      const assignments = getPageAssignments(lessonId);
+      Object.keys(assignments).forEach(pageTitle => {
+        assignments[pageTitle] = (assignments[pageTitle] || []).filter(item => item !== profileName);
+      });
+    }
+
+    function closePagePickers() {
+      $$(".page-level-picker").forEach(picker => picker.classList.remove("open"));
+    }
+
+    function renderPageLevelModal() {
+      const lessonId = state.pageLevelModalLessonId;
+      if (!lessonId) return;
+
+      const pages = getLessonPageList(lessonId);
+      const lessonProfiles = getLessonMappings(lessonId);
+      const pageLevelEligibleProfiles = getAvailableProfiles().filter(profile => !lessonProfiles.includes(profile));
+      const pageList = $("#pageLevelPages");
+      const profilesEl = $("#pageLevelProfiles");
+      const lessonName = $("#pageLevelLessonName");
+
+      if (lessonName) {
+        lessonName.textContent = `Lesson: ${getLessonName(lessonId)}`;
+      }
+
+      if (pageList) {
+        pageList.innerHTML = pages.map(page => {
+          const lessonLevelChips = lessonProfiles;
+          const assigned = getPageProfiles(lessonId, page).filter(profile => pageLevelEligibleProfiles.includes(profile));
+          getPageAssignments(lessonId)[page] = assigned;
+          const availableProfiles = pageLevelEligibleProfiles.filter(profile => !assigned.includes(profile));
+
+          return `
+            <li class="page-level-item" data-page-title="${page}">
+              <div class="page-level-row">
+                <span class="mi page-level-page-icon" aria-hidden="true">description</span>
+                <span class="page-level-page-title">${page}</span>
+                <div class="page-level-page-actions">
+                  <button class="page-level-add" type="button" aria-label="Add profile to ${page}">+</button>
+                  <div class="page-level-picker"></div>
+                </div>
+              </div>
+              <div class="page-level-page-chip-row">
+                ${lessonLevelChips.map(profile => `
+                  <span class="mapping-chip">
+                    <span>${profile}</span>
+                  </span>
+                `).join("")}
+                ${assigned.length ? assigned.map(profile => `
+                  <span class="mapping-chip">
+                    <span>${profile}</span>
+                    <button class="remove-page-chip" data-lesson-id="${lessonId}" data-page-title="${page}" data-profile="${profile}" type="button" aria-label="Remove ${profile} from ${page}">×</button>
+                  </span>
+                `).join("") : ''}
+                ${!lessonLevelChips.length && !assigned.length ? '<span class="page-level-empty">No page-level profiles applied.</span>' : ''}
+              </div>
+            </li>
+          `;
+        }).join("");
+
+        $$(".page-level-item", pageList).forEach(item => {
+          const pageTitle = item.dataset.pageTitle;
+          const picker = item.querySelector(".page-level-picker");
+          const addButton = item.querySelector(".page-level-add");
+          if (!picker || !addButton || !pageTitle) return;
+
+          const assigned = getPageProfiles(lessonId, pageTitle);
+          const availableProfiles = pageLevelEligibleProfiles.filter(profile => !assigned.includes(profile));
+          picker.innerHTML = availableProfiles.length
+            ? availableProfiles.map(profile => `
+              <button type="button" data-lesson-id="${lessonId}" data-page-title="${pageTitle}" data-profile="${profile}">${profile}</button>
+            `).join("")
+            : '<button type="button" disabled>No more profiles</button>';
+
+          addButton.addEventListener("click", event => {
+            event.stopPropagation();
+            const open = picker.classList.contains("open");
+            closePagePickers();
+            if (!open) picker.classList.add("open");
+          });
+        });
+      }
+
+      if (profilesEl) {
+        if (!lessonProfiles.length) {
+          profilesEl.innerHTML = '<span class="page-level-empty">No profiles attached to this lesson.</span>';
+        } else {
+          profilesEl.innerHTML = lessonProfiles.map(profile => `
+            <span class="mapping-chip">
+              <span>${profile}</span>
+              <button class="remove-page-level-profile" data-lesson-id="${lessonId}" data-profile="${profile}" type="button" aria-label="Remove ${profile}">×</button>
+            </span>
+          `).join("");
+        }
+      }
+    }
+
+    function openPageLevelModal(lessonId) {
+      state.pageLevelModalLessonId = lessonId;
+      renderPageLevelModal();
+      $("#pageLevelModal").classList.add("open");
+    }
+
+    function closePageLevelModal() {
+      $("#pageLevelModal").classList.remove("open");
+      state.pageLevelModalLessonId = null;
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/\"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function _randItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+    function _randInt(min, max) { return min + Math.floor(Math.random() * (max - min + 1)); }
+    function _pick(arr, n) {
+      const copy = [...arr], result = [];
+      for (let i = 0; i < n && copy.length; i++) {
+        result.push(copy.splice(Math.floor(Math.random() * copy.length), 1)[0]);
+      }
+      return result;
+    }
+
+    function generateValidationIssues() {
+      const profiles = [
+        "Manager \u2013 USA", "Manager \u2013 Europe", "Manager \u2013 APAC",
+        "Individual Contributor", "Senior Director", "New Hire",
+        "Compliance Officer", "Team Lead"
+      ];
+      const lessonPool = [
+        { name: "Lesson 1 \u2013 GDPR Fundamentals",    pages: ["The General Data Protection Regulation", "The Key Players", "How Does the GDPR Protect Personal Data?", "What Can Antoine Do?", "Processing Data Lawfully"] },
+        { name: "Lesson 2 \u2013 Data Protection",      pages: ["What is Personal Data?", "Data Subject Rights", "Breach Notification", "International Transfers", "Accountability"] },
+        { name: "Lesson 3 \u2013 Security Awareness",   pages: ["Phishing & Social Engineering", "Password Best Practices", "Device Security", "Incident Reporting"] },
+        { name: "Lesson 4 \u2013 Compliance Module",    pages: ["Regulatory Landscape", "Policies & Procedures", "Reporting Obligations", "Whistleblowing Policy"] },
+        { name: "Lesson 5 \u2013 Leadership Training",  pages: ["Setting Team Goals", "Performance Reviews", "Coaching Conversations", "Delegation & Empowerment"] }
+      ];
+      const questions   = ["Are you a manager?", "Where are you based?", "What is your seniority level?", "Is your role client-facing?", "How long have you been with the company?"];
+      const answerPairs = [["Yes", "No"], ["North America", "Europe"], ["Director or above", "Manager or below"], ["Yes \u2013 regularly", "No \u2013 rarely"], ["Less than 6 months", "More than 6 months"]];
+
+      const issuePool = [];
+
+      // Candidate UNREACHABLE_PAGE issues
+      for (let i = 0; i < 3; i++) {
+        const [pA, pB] = _pick(profiles, 2);
+        const lesson = _randItem(lessonPool);
+        const page   = _randItem(lesson.pages);
+        const qIdx   = Math.floor(Math.random() * questions.length);
+        const [ansA, ansB] = answerPairs[qIdx % answerPairs.length];
+        issuePool.push({
+          type: "UNREACHABLE_PAGE", severity: "error",
+          lesson: lesson.name, page, profileA: pA, profileB: pB,
+          detail: `<strong>${escapeHtml(lesson.name)}</strong> is routed exclusively to <strong>${escapeHtml(pA)}</strong> at the lesson level. The page <em>${escapeHtml(page)}</em> has been individually assigned to <strong>${escapeHtml(pB)}</strong>. Because ${escapeHtml(pA)} is selected when <em>\u201c${escapeHtml(questions[qIdx])}\u201d</em> = <em>${escapeHtml(ansA)}</em> and ${escapeHtml(pB)} when = <em>${escapeHtml(ansB)}</em>, no learner can match both profiles \u2014 this page is permanently unreachable.`
+        });
+      }
+
+      // Candidate ORPHANED_CONTENT issues
+      for (let i = 0; i < 2; i++) {
+        const lesson = _randItem(lessonPool);
+        issuePool.push({
+          type: "ORPHANED_CONTENT", severity: "warning",
+          lesson: lesson.name, page: null, profileA: null, profileB: null,
+          detail: `<strong>${escapeHtml(lesson.name)}</strong> has no profiles assigned at lesson level and no page-level overrides. With adaptive routing active, this lesson will be skipped for all learners regardless of their profile.`
+        });
+      }
+
+      // Candidate PROFILE_CONFLICT issues
+      for (let i = 0; i < 2; i++) {
+        const [pA, pB] = _pick(profiles, 2);
+        const lesson   = _randItem(lessonPool);
+        const page     = _randItem(lesson.pages);
+        const question = _randItem(questions);
+        issuePool.push({
+          type: "PROFILE_CONFLICT", severity: "warning",
+          lesson: lesson.name, page, profileA: pA, profileB: pB,
+          detail: `The page <em>${escapeHtml(page)}</em> in <strong>${escapeHtml(lesson.name)}</strong> is assigned to both <strong>${escapeHtml(pA)}</strong> and <strong>${escapeHtml(pB)}</strong>. These profiles have mutually exclusive rules based on <em>\u201c${escapeHtml(question)}\u201d</em>. The page will only be shown to the first matching profile in routing order; learners matching the other profile may never reach it.`
+        });
+      }
+
+      return _pick(issuePool, _randInt(2, 4));
+    }
+
+    function renderValidationResults() {
+      const body = document.querySelector("#visualizeModal .modal-body");
+      if (!body) return;
+
+      body.innerHTML = `<div class="validate-scanning"><span class="mi" aria-hidden="true">sync</span><span>Scanning profile assignments and routing rules\u2026</span></div>`;
+
+      setTimeout(() => {
+        const issues     = generateValidationIssues();
+        const errorCount = issues.filter(i => i.severity === "error").length;
+        const warnCount  = issues.filter(i => i.severity === "warning").length;
+
+        if (!issues.length) {
+          body.innerHTML = `<div class="validate-pass"><span class="mi" aria-hidden="true">check_circle</span><div><strong>No reachability issues found.</strong><p>All lessons and pages are accessible from at least one active profile.</p></div></div>`;
+          return;
+        }
+
+        const typeLabel = { UNREACHABLE_PAGE: "Unreachable Page", ORPHANED_CONTENT: "Orphaned Content", PROFILE_CONFLICT: "Profile Conflict" };
+        const typeIcon  = { UNREACHABLE_PAGE: "block", ORPHANED_CONTENT: "visibility_off", PROFILE_CONFLICT: "compare_arrows" };
+
+        const summaryHtml = `
+          <div class="validate-summary">
+            <div class="validate-summary-stats">
+              <span class="validate-stat-badge error">${errorCount} error${errorCount !== 1 ? "s" : ""}</span>
+              <span class="validate-stat-badge warning">${warnCount} warning${warnCount !== 1 ? "s" : ""}</span>
+            </div>
+            <p class="validate-summary-text">The following content may be unreachable due to conflicting or missing profile assignments.</p>
+          </div>`;
+
+        const issuesHtml = issues.map(issue => {
+          const location     = issue.page ? `${issue.lesson} \u203a ${issue.page}` : issue.lesson;
+          const locIcon      = issue.page ? "description" : "play_lesson";
+          const profilesHtml = issue.profileA && issue.profileB ? `
+            <div class="validate-conflict-profiles">
+              <span class="validate-profile-chip a">${escapeHtml(issue.profileA)}</span>
+              <span class="mi validate-conflict-arrow" aria-hidden="true">sync_alt</span>
+              <span class="validate-profile-chip b">${escapeHtml(issue.profileB)}</span>
+            </div>` : "";
+          return `
+            <div class="validate-issue ${issue.severity}">
+              <div class="validate-issue-header">
+                <span class="validate-badge ${issue.severity}">
+                  <span class="mi" aria-hidden="true">${typeIcon[issue.type] || "warning"}</span>
+                  ${typeLabel[issue.type] || issue.type}
+                </span>
+                <span class="validate-location">
+                  <span class="mi" aria-hidden="true">${locIcon}</span>
+                  ${escapeHtml(location)}
+                </span>
+              </div>
+              <div class="validate-issue-detail">${issue.detail}</div>
+              ${profilesHtml}
+            </div>`;
+        }).join("");
+
+        body.innerHTML = summaryHtml + `<div class="validate-issues-list">${issuesHtml}</div>`;
+      }, 800);
+    }
+
+    function openVisualizeModal() {
+      renderValidationResults();
+      $("#visualizeModal").classList.add("open");
+    }
+
+    function closeVisualizeModal() {
+      $("#visualizeModal").classList.remove("open");
+    }
+
+    function renderProfileMapping() {
+      const options = getAvailableProfiles();
+      $$(".mapping-control[data-lesson-id]").forEach(mappingControl => {
+        const lessonId = mappingControl.dataset.lessonId;
+        const selectedBar = mappingControl.querySelector(".mapping-selected");
+        const chipRow = mappingControl.querySelector(".mapping-chip-row");
+        const dropdown = mappingControl.querySelector(".mapping-dropdown");
+        if (!lessonId || !selectedBar || !chipRow || !dropdown) return;
+
+        const selectedMappings = getLessonMappings(lessonId).filter(item => options.includes(item));
+        state.selectedMappingsByLesson[lessonId] = selectedMappings;
+        updateMappingCardSummary(mappingControl, selectedMappings.length);
+
+        if (!selectedMappings.length) {
+          selectedBar.innerHTML = '<span class="mapping-placeholder">Select profiles</span>';
+          chipRow.innerHTML = "";
+        } else {
+          selectedBar.innerHTML = `
+            <span class="mapping-selected-inline">${selectedMappings.join(", ")}</span>
+            <span class="mapping-selected-count">${selectedMappings.length} selected</span>
+          `;
+
+          chipRow.innerHTML = selectedMappings.map(item => `
+            <span class="mapping-chip">
+              <span>${item}</span>
+              <button class="remove-map" data-lesson-id="${lessonId}" data-profile="${item}" type="button" aria-label="Remove ${item}">×</button>
+            </span>
+          `).join("");
+        }
+
+        dropdown.innerHTML = options.map(item => {
+          const checked = selectedMappings.includes(item) ? "checked" : "";
+          return `
+            <label class="mapping-option">
+              <input type="checkbox" data-lesson-id="${lessonId}" data-map-option="${item}" ${checked}>
+              <span>${item}</span>
+            </label>
+          `;
+        }).join("");
+      });
+    }
+
+    function setMappingOpen(mappingControl, open) {
+      const dropdown = mappingControl?.querySelector(".mapping-dropdown");
+      const toggle = mappingControl?.querySelector(".mapping-toggle");
       if (!dropdown || !toggle) return;
       dropdown.classList.toggle("open", open);
       toggle.setAttribute("aria-expanded", String(open));
     }
 
-    function renderAvailableAnswers() {
-      const query = $("#answerSearch").value.trim().toLowerCase();
-      const question = $("#ruleQuestion").value;
+    function closeAllMappingDropdowns(exceptControl = null) {
+      $$(".mapping-control[data-lesson-id]").forEach(mappingControl => {
+        if (mappingControl !== exceptControl) {
+          setMappingOpen(mappingControl, false);
+        }
+      });
+    }
+
+    function renderAvailableAnswers(ruleCard = document.querySelector(".profile-card .rule-card")) {
+      if (!ruleCard) return;
+      const ruleState = getRuleState(ruleCard);
+      const queryInput = ruleCard.querySelector("#answerSearch");
+      const questionSelect = ruleCard.querySelector("#ruleQuestion");
+      const availableAnswersEl = ruleCard.querySelector("#availableAnswers");
+      const selectedAnswersEl = ruleCard.querySelector("#selectedAnswers");
+      const availableCountEl = ruleCard.querySelector("#availableCount");
+      const selectedCountEl = ruleCard.querySelector("#selectedCount");
+      if (!queryInput || !questionSelect || !availableAnswersEl || !selectedAnswersEl || !availableCountEl || !selectedCountEl) return;
+
+      const query = queryInput.value.trim().toLowerCase();
+      const question = questionSelect.value;
+      syncAnswerBankFromTree();
       const sourceOptions = question ? (state.answerBank[question] || []) : [];
-      const source = sourceOptions.filter(item => !state.selectedAnswers.includes(item));
+      const source = sourceOptions.filter(item => !ruleState.selectedAnswers.includes(item));
       const visible = source.filter(item => item.toLowerCase().includes(query));
-      $("#availableCount").textContent = visible.length;
-      $("#availableAnswers").innerHTML = visible.map(item => `
+      availableCountEl.textContent = visible.length;
+      availableAnswersEl.innerHTML = visible.map(item => `
         <label class="answer-choice">
           <input type="checkbox" value="${item}">
           <span>${item}</span>
         </label>
       `).join("");
-      $("#selectedCount").textContent = state.selectedAnswers.length;
-      $("#selectedAnswers").innerHTML = state.selectedAnswers.map(item => `
+      selectedCountEl.textContent = ruleState.selectedAnswers.length;
+      selectedAnswersEl.innerHTML = ruleState.selectedAnswers.map(item => `
         <div class="selected-choice">
           <span>${item}</span>
           <button class="icon-button remove-answer" data-answer="${item}" title="Remove"><span class="mi" aria-hidden="true">close</span></button>
@@ -1343,33 +2303,43 @@
       `).join("");
     }
 
-    function validateRule() {
-      const hasQuestion = Boolean($("#ruleQuestion").value);
-      const logicSelect = $("#logicSelect");
+    function validateRule(ruleCard = document.querySelector(".profile-card .rule-card")) {
+      if (!ruleCard) return;
+      const ruleState = getRuleState(ruleCard);
+      const questionSelect = ruleCard.querySelector("#ruleQuestion");
+      const logicSelect = ruleCard.querySelector("#logicSelect");
+      const questionError = ruleCard.querySelector("#questionError");
+      const logicError = ruleCard.querySelector("#logicError");
+      const addRuleButton = ruleCard.querySelector("#addRule");
+      if (!questionSelect || !logicSelect || !questionError || !logicError || !addRuleButton) return;
+
+      const hasQuestion = Boolean(questionSelect.value);
 
       logicSelect.disabled = !hasQuestion;
       if (!hasQuestion) logicSelect.value = "";
 
       const hasLogic = hasQuestion && Boolean(logicSelect.value);
-      $("#ruleQuestion").classList.toggle("danger", !hasQuestion);
-      $("#questionError").style.display = hasQuestion ? "none" : "flex";
+      questionSelect.classList.toggle("danger", !hasQuestion);
+      questionError.style.display = hasQuestion ? "none" : "flex";
       logicSelect.classList.toggle("danger", !hasLogic);
-      $("#logicError").style.display = hasLogic ? "none" : "flex";
-      $("#addRule").disabled = !(hasQuestion && hasLogic && state.selectedAnswers.length);
-      $("#addRule").classList.toggle("ghost", $("#addRule").disabled);
-      $("#addRule").classList.toggle("outline-teal", !$("#addRule").disabled);
+      logicError.style.display = hasLogic ? "none" : "flex";
+      addRuleButton.disabled = !(hasQuestion && hasLogic && ruleState.selectedAnswers.length);
+      addRuleButton.classList.toggle("ghost", addRuleButton.disabled);
+      addRuleButton.classList.toggle("outline-teal", !addRuleButton.disabled);
     }
 
-    function createRulePanel() {
-      const profileBody = $(".profile-body");
-      const sourceRule = profileBody.querySelector(".rule-card");
+    function createRulePanel(profileCard = document.querySelector(".profile-card")) {
+      if (!profileCard) return;
+      const profileBody = profileCard.querySelector(".profile-body");
+      const sourceRule = profileBody?.querySelector(".rule-card");
       if (!sourceRule) return;
 
-      state.ruleCount += 1;
+      const count = getProfileRuleCount(profileCard) + 1;
+      setProfileRuleCount(profileCard, count);
 
       const newRule = sourceRule.cloneNode(true);
       const title = newRule.querySelector("h3");
-      if (title) title.textContent = `Rule ${state.ruleCount}`;
+      if (title) title.textContent = `Rule ${count}`;
 
       const questionSelect = newRule.querySelector("#ruleQuestion");
       const logicSelect = newRule.querySelector("#logicSelect");
@@ -1411,6 +2381,249 @@
       }
 
       profileBody.appendChild(newRule);
+      ruleStateMap.set(newRule, { selectedAnswers: [] });
+      renderAvailableAnswers(newRule);
+      validateRule(newRule);
+
+      return newRule;
+    }
+
+    function configureDefaultProfileOne() {
+      const profileCard = document.querySelector("#profiles .profile-card");
+      if (!profileCard) return;
+
+      const profileBody = profileCard.querySelector(".profile-body");
+      if (!profileBody) return;
+
+      let ruleCards = Array.from(profileBody.querySelectorAll(".rule-card"));
+      if (ruleCards.length < 2) {
+        createRulePanel(profileCard);
+        ruleCards = Array.from(profileBody.querySelectorAll(".rule-card"));
+      }
+
+      // Configure Rule 1
+      const firstRule = ruleCards[0];
+      if (firstRule) {
+        const firstQuestionSelect = firstRule.querySelector("#ruleQuestion");
+        const firstLogicSelect = firstRule.querySelector("#logicSelect");
+        
+        if (firstQuestionSelect) {
+          firstQuestionSelect.value = "manager";
+        }
+
+        const firstRuleState = getRuleState(firstRule);
+        firstRuleState.selectedAnswers = ["Yes"];
+
+        if (firstLogicSelect) {
+          firstLogicSelect.disabled = false;
+          firstLogicSelect.value = "May contain any";
+        }
+
+        renderAvailableAnswers(firstRule);
+        validateRule(firstRule);
+      }
+
+      // Configure Rule 2
+      const secondRule = ruleCards[1];
+      if (!secondRule) return;
+
+      const questionSelect = secondRule.querySelector("#ruleQuestion");
+      const logicSelect = secondRule.querySelector("#logicSelect");
+      if (!questionSelect) return;
+
+      let basedOption = Array.from(questionSelect.options).find(opt => opt.value === "based");
+      if (!basedOption) {
+        basedOption = Array.from(questionSelect.options).find(opt => /where are you based/i.test(opt.textContent));
+      }
+      if (!basedOption) return;
+
+      questionSelect.value = basedOption.value;
+
+      const secondRuleState = getRuleState(secondRule);
+      secondRuleState.selectedAnswers = ["North America"];
+
+      if (logicSelect) {
+        logicSelect.disabled = false;
+        logicSelect.value = "May contain any";
+      }
+
+      renderAvailableAnswers(secondRule);
+      validateRule(secondRule);
+    }
+
+    function bindProfileCard(profileCard) {
+      const profileTitle = profileCard.querySelector(".profile-title");
+      const profileName = profileCard.querySelector("#profileName");
+      const profileBody = profileCard.querySelector(".profile-body");
+
+      if (profileTitle && profileName) {
+        profileName.addEventListener("input", event => {
+          profileTitle.textContent = event.target.value || "Profile Name 1";
+          renderProfileMapping();
+          markDirty();
+        });
+      }
+
+      if (profileTitle) {
+        profileTitle.addEventListener("click", () => {
+          profileCard.classList.toggle("collapsed");
+        });
+      }
+
+      if (!profileBody) return;
+
+      profileBody.addEventListener("click", event => {
+        const addRuleButton = event.target.closest("#addRule");
+        if (addRuleButton) {
+          createRulePanel(profileCard);
+          toast("Rule added.");
+          markDirty();
+          return;
+        }
+
+        const addSelectedButton = event.target.closest("#addSelected");
+        const addAllButton = event.target.closest("#addAll");
+        const removeAllButton = event.target.closest("#removeAll");
+        const removeAnswerButton = event.target.closest(".remove-answer");
+        if (!addSelectedButton && !addAllButton && !removeAllButton && !removeAnswerButton) return;
+
+        const ruleCard = event.target.closest(".rule-card");
+        if (!ruleCard) return;
+        const ruleState = getRuleState(ruleCard);
+
+        if (addSelectedButton) {
+          const selected = ruleCard.querySelectorAll("#availableAnswers input:checked");
+          selected.forEach(box => {
+            if (!ruleState.selectedAnswers.includes(box.value)) ruleState.selectedAnswers.push(box.value);
+          });
+          renderAvailableAnswers(ruleCard);
+          validateRule(ruleCard);
+          markDirty();
+          return;
+        }
+
+        if (addAllButton) {
+          const question = ruleCard.querySelector("#ruleQuestion")?.value;
+          if (!question) return;
+          (state.answerBank[question] || []).forEach(item => {
+            if (!ruleState.selectedAnswers.includes(item)) ruleState.selectedAnswers.push(item);
+          });
+          renderAvailableAnswers(ruleCard);
+          validateRule(ruleCard);
+          markDirty();
+          return;
+        }
+
+        if (removeAllButton) {
+          ruleState.selectedAnswers = [];
+          renderAvailableAnswers(ruleCard);
+          validateRule(ruleCard);
+          markDirty();
+          return;
+        }
+
+        if (removeAnswerButton) {
+          ruleState.selectedAnswers = ruleState.selectedAnswers.filter(item => item !== removeAnswerButton.dataset.answer);
+          renderAvailableAnswers(ruleCard);
+          validateRule(ruleCard);
+          markDirty();
+        }
+      });
+
+      profileBody.addEventListener("input", event => {
+        const ruleCard = event.target.closest(".rule-card");
+        const profileInput = event.target.closest("#profileName");
+
+        if (profileInput) {
+          renderProfileMapping();
+          markDirty();
+          return;
+        }
+
+        if (ruleCard && event.target.matches("#answerSearch")) {
+          renderAvailableAnswers(ruleCard);
+          markDirty();
+        }
+
+        if (ruleCard && event.target.matches("#ruleQuestion")) {
+          getRuleState(ruleCard).selectedAnswers = [];
+          renderAvailableAnswers(ruleCard);
+          validateRule(ruleCard);
+          markDirty();
+        }
+      });
+
+      profileBody.addEventListener("change", event => {
+        const ruleCard = event.target.closest(".rule-card");
+        if (!ruleCard) return;
+
+        if (event.target.matches("#ruleQuestion")) {
+          getRuleState(ruleCard).selectedAnswers = [];
+          renderAvailableAnswers(ruleCard);
+          validateRule(ruleCard);
+          markDirty();
+          return;
+        }
+
+        if (event.target.matches("#logicSelect")) {
+          validateRule(ruleCard);
+          markDirty();
+        }
+      });
+    }
+
+    function addProfileCard() {
+      const profilesSection = document.querySelector("#profiles");
+      const existingCards = Array.from(profilesSection.querySelectorAll(".profile-card"));
+      const template = existingCards[0];
+      if (!template) return;
+
+      const newCard = template.cloneNode(true);
+      
+      // Remove extra rules (keep only the first rule)
+      const ruleCards = Array.from(newCard.querySelectorAll(".rule-card"));
+      for (let i = 1; i < ruleCards.length; i++) {
+        ruleCards[i].remove();
+      }
+      
+      const profileNumber = existingCards.length + 1;
+      const numberNode = newCard.querySelector(".number");
+      const profileTitle = newCard.querySelector(".profile-title");
+      const profileName = newCard.querySelector("#profileName");
+      const profileDesc = newCard.querySelector("#profileDesc");
+      const ruleTitles = newCard.querySelectorAll(".rule-card h3");
+
+      if (numberNode) numberNode.textContent = `${profileNumber}.`;
+      if (profileTitle) profileTitle.textContent = `Profile Name ${profileNumber}`;
+      if (profileName) profileName.value = `Profile Name ${profileNumber}`;
+      if (profileDesc) profileDesc.value = "";
+      ruleTitles.forEach((title, index) => {
+        title.textContent = `Rule ${index + 1}`;
+      });
+
+      newCard.querySelectorAll("#ruleQuestion").forEach(select => select.value = "");
+      newCard.querySelectorAll("#logicSelect").forEach(select => {
+        select.value = "";
+        select.disabled = true;
+      });
+      newCard.querySelectorAll("#answerSearch, #availableAnswers, #selectedAnswers").forEach(el => {
+        if (el.matches("#answerSearch")) el.value = "";
+        if (el.matches("#availableAnswers") || el.matches("#selectedAnswers")) el.innerHTML = "";
+      });
+      newCard.querySelectorAll("#selectedCount").forEach(el => el.textContent = "0");
+      newCard.querySelectorAll("#availableCount").forEach(el => el.textContent = "0");
+      newCard.querySelectorAll("#questionError, #logicError").forEach(el => el.style.display = "flex");
+      newCard.querySelectorAll("#addRule").forEach(button => {
+        button.disabled = true;
+        button.classList.add("ghost");
+        button.classList.remove("outline-teal");
+      });
+
+      profilesSection.insertBefore(newCard, profilesSection.querySelector("section.section") || profilesSection.lastElementChild);
+      setProfileRuleCount(newCard, 1);
+      newCard.querySelectorAll(".rule-card").forEach(ruleCard => ruleStateMap.set(ruleCard, { selectedAnswers: [] }));
+      bindProfileCard(newCard);
+      renderProfileMapping();
     }
 
     function renderModalAnswers() {
@@ -1423,14 +2636,15 @@
           <button class="icon-button remove-modal-answer" data-index="${index}" title="Remove answer"><span class="mi" aria-hidden="true">close</span></button>
           <span class="mi answer-warning" title="Warning" aria-hidden="true">warning</span>
           ${index === state.modalAnswers.length - 1 ? '<button class="add-square add-modal-answer" title="Add answer option">+</button>' : '<span></span>'}
-          ${index === state.modalAnswers.length - 1 ? '<span class="mi" title="Help" aria-hidden="true">help</span>' : '<span></span>'}
+          ${index === state.modalAnswers.length - 1 ? '<span class="mi" title="The Maximum of 50 Answer Options can be Added" aria-hidden="true">help</span>' : '<span></span>'}
         </div>
       `).join("");
     }
 
-    function openModal(number = "1.2", title = "Are you a manager?", answers = ["Yes", "No"], mode = "add", responseType = "single") {
+    function openModal(number = "1.2", title = "Are you a manager?", answers = ["Yes", "No"], mode = "add", responseType = "single", target = null) {
       state.modalMode = mode;
       state.modalResponseType = responseType;
+      state.modalTarget = target;
       $("#questionNumber").textContent = number;
       $("#modalTitle").textContent = mode === "edit" ? "Edit Question" : "Add Question";
       $("#saveQuestion").textContent = mode === "edit" ? "Save" : "Add Question";
@@ -1447,10 +2661,17 @@
       if (nested) {
         const title = nested.querySelector("strong")?.textContent?.trim() || "Question Title";
         const number = nested.querySelector(".pill")?.textContent?.trim() || "1.1";
+        const optionsId = nested.querySelector(".mini-add")?.getAttribute("aria-controls");
+        const optionsPanel = optionsId ? document.getElementById(optionsId) : null;
+        const answers = optionsPanel
+          ? Array.from(optionsPanel.querySelectorAll(".answer-node > span:nth-child(2)"))
+              .map(el => el.textContent.trim())
+              .filter(Boolean)
+          : [];
         return {
           number,
           title,
-          answers: ["USA", "Europe", "South America"],
+          answers: answers.length ? answers : ["Answer Option 1"],
           responseType: "multiple"
         };
       }
@@ -1458,10 +2679,16 @@
       const treeQuestion = button.closest(".tree-question");
       if (treeQuestion) {
         const title = treeQuestion.querySelector(".question-title")?.textContent?.trim() || "Question Title";
-        const answers = treeQuestion.querySelectorAll(".answer-node > span:nth-child(2)");
-        const mappedAnswers = Array.from(answers).map(el => el.textContent.trim()).filter(Boolean);
+        const number = treeQuestion.querySelector(".number")?.textContent?.trim()?.replace(".", "") || "1";
+        const content = treeQuestion.querySelector(".tree-question > div:nth-child(2)") || treeQuestion.children[1];
+        const mappedAnswers = content
+          ? Array.from(content.children)
+              .filter(node => node.classList?.contains("answer-node"))
+              .map(node => node.querySelector("span:nth-child(2)")?.textContent?.trim() || "")
+              .filter(Boolean)
+          : [];
         return {
-          number: "1",
+          number,
           title,
           answers: mappedAnswers.length ? mappedAnswers : ["Yes", "No"],
           responseType: "single"
@@ -1490,9 +2717,256 @@
       };
     }
 
+    function addNewQuestionToTree(questionNumber, title, answers) {
+      const treeCard = document.getElementById("questionTree");
+      if (!treeCard) return;
+
+      const parts = questionNumber.split(".");
+      const isFollowUp = parts.length > 1;
+
+      if (isFollowUp) {
+        // This is a nested question (follow-up), which shouldn't be added directly to the tree
+        // It should only be added via the nested-question UI
+        return;
+      }
+
+      // Create a new primary question
+      const maxNumber = Math.max(
+        0,
+        ...Array.from(treeCard.querySelectorAll(".tree-question .number")).map(el =>
+          parseInt(el.textContent.trim().replace(".", ""), 10)
+        )
+      );
+      const newQuestionNumber = maxNumber + 1;
+
+      const answerNodesHtml = answers.map(answer => `
+        <div class="answer-node">
+          <span class="branch-dot gray"></span>
+          <span>${answer}</span>
+          <div class="meta-icons" style="margin-left:auto;">
+            <span class="mi menu-trigger" aria-hidden="true">more_horiz</span>
+            <div class="context-menu">
+              <button class="add-followup"><span class="mi" aria-hidden="true" style="font-size: 16px; margin-right: 8px;">account_tree</span>Add Follow Up Question</button>
+              <button class="delete-question"><span class="mi" aria-hidden="true" style="font-size: 16px; margin-right: 8px;">delete</span>Delete</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+
+      const questionHtml = `
+        <div class="tree-question">
+          <div class="number">${newQuestionNumber}.</div>
+          <div>
+            <div class="question-title"><span class="expand-icon" aria-hidden="true"></span>${title}</div>
+            ${answerNodesHtml}
+          </div>
+          <div class="meta-icons">
+            <span class="mi" aria-hidden="true">warning</span>
+            <span class="mi menu-trigger" aria-hidden="true">more_horiz</span>
+            <div class="context-menu">
+              <button class="edit-question"><span class="mi" aria-hidden="true" style="font-size: 16px; margin-right: 8px;">edit</span>Edit</button>
+              <button class="delete-question"><span class="mi" aria-hidden="true" style="font-size: 16px; margin-right: 8px;">delete</span>Delete</button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      treeCard.insertAdjacentHTML("beforeend", questionHtml);
+      syncAnswerBankFromTree();
+      syncRuleQuestionDropdowns();
+    }
+
     function closeModal() {
       $("#questionModal").classList.remove("open");
-      $("#questionHints").classList.remove("open");
+      state.modalTarget = null;
+    }
+
+    function buildInlineOptionsHtml(options) {
+      return options.map(option => `
+        <div class="answer-node">
+          <span class="branch-dot gray"></span>
+          <span>${option}</span>
+        </div>
+      `).join("");
+    }
+
+    function getNextNestedNumber(treeQuestion) {
+      const baseNumber = treeQuestion?.querySelector(".number")?.textContent?.trim()?.replace(".", "") || "1";
+      const nestedCount = treeQuestion?.querySelectorAll(".nested-question").length || 0;
+      return `${baseNumber}.${nestedCount + 1}`;
+    }
+
+    function insertFollowUpAfterOption(answerNode, followUpHtml) {
+      let insertAfter = answerNode;
+      while (
+        insertAfter.nextElementSibling &&
+        (insertAfter.nextElementSibling.classList.contains("nested-question") ||
+         insertAfter.nextElementSibling.classList.contains("nested-options"))
+      ) {
+        insertAfter = insertAfter.nextElementSibling;
+      }
+      insertAfter.insertAdjacentHTML("afterend", followUpHtml);
+    }
+
+    function setFollowUpActionVisibility(answerNode, hidden) {
+      const followUpAction = answerNode?.querySelector(".context-menu .add-followup");
+      if (!followUpAction) return;
+      followUpAction.style.display = hidden ? "none" : "block";
+    }
+
+    function addFollowUpInline(button) {
+      const answerNode = button.closest(".answer-node");
+      const treeQuestion = answerNode?.closest(".tree-question");
+      if (!answerNode || !treeQuestion) return;
+
+      const answerText = answerNode.querySelector("span:nth-child(2)")?.textContent?.trim() || "Answer";
+      const key = answerText.toLowerCase();
+
+      if (!state.followUpsByOption[key]) {
+        state.followUpsByOption[key] = [];
+      }
+
+      if (state.followUpsByOption[key].length) {
+        setFollowUpActionVisibility(answerNode, true);
+        toast(`Only one follow-up question is allowed for ${answerText}.`);
+        return;
+      }
+
+      const followUpIndex = state.followUpsByOption[key].length + 1;
+      const nestedNumber = getNextNestedNumber(treeQuestion);
+      const panelId = `nestedOptions${state.nextFollowUpPanelId++}`;
+      const followUpId = `followUp${state.nextFollowUpId++}`;
+      const followUpTitle = `Follow up for ${answerText} ${followUpIndex}`;
+      const defaultOptions = [
+        `${answerText} Option 1`,
+        `${answerText} Option 2`,
+        `${answerText} Option 3`
+      ];
+
+      const followUpHtml = `
+        <div class="nested-question" data-followup-id="${followUpId}" data-parent-option="${key}">
+          <button class="mini-add" title="Show answer options" aria-expanded="false" aria-controls="${panelId}">add_circle</button>
+          <strong>${followUpTitle}</strong>
+          <span class="pill">${nestedNumber}</span>
+          <div class="meta-icons">
+            <span class="mi menu-trigger" aria-hidden="true">more_horiz</span>
+            <div class="context-menu">
+              <button class="edit-question"><span class="mi" aria-hidden="true" style="font-size: 16px; margin-right: 8px;">edit</span>Edit</button>
+              <button class="delete-question"><span class="mi" aria-hidden="true" style="font-size: 16px; margin-right: 8px;">delete</span>Delete</button>
+            </div>
+          </div>
+        </div>
+        <div class="nested-options" id="${panelId}">
+          ${buildInlineOptionsHtml(defaultOptions)}
+        </div>
+      `;
+
+      insertFollowUpAfterOption(answerNode, followUpHtml);
+
+      // Mark the answer-node as expandable
+      answerNode.classList.add("has-followup");
+      const dot = answerNode.querySelector(".branch-dot");
+      if (dot) {
+        const icon = document.createElement("span");
+        icon.className = "mi branch-expand";
+        icon.textContent = "remove_circle";
+        dot.replaceWith(icon);
+      } else if (!answerNode.querySelector(".branch-expand")) {
+        const icon = document.createElement("span");
+        icon.className = "mi branch-expand";
+        icon.textContent = "remove_circle";
+        answerNode.insertBefore(icon, answerNode.firstChild);
+      }
+
+      state.followUpsByOption[key].push({
+        id: followUpId,
+        nestedNumber,
+        title: followUpTitle,
+        options: defaultOptions
+      });
+
+      setFollowUpActionVisibility(answerNode, true);
+
+      syncRuleQuestionDropdowns();
+      toast(`Follow-up added under ${answerText}.`);
+      markDirty();
+    }
+
+    function syncTrackedFollowUp(nestedQuestion, title, options) {
+      const followUpId = nestedQuestion.getAttribute("data-followup-id");
+      const parentOption = nestedQuestion.getAttribute("data-parent-option");
+      if (!followUpId || !parentOption || !state.followUpsByOption[parentOption]) return;
+
+      const target = state.followUpsByOption[parentOption].find(item => item.id === followUpId);
+      if (!target) return;
+      target.title = title;
+      target.options = [...options];
+    }
+
+    function applyModalEditsToInline(title, answers) {
+      const target = state.modalTarget;
+      if (!target) return;
+
+      if (target.classList.contains("nested-question")) {
+        const titleNode = target.querySelector("strong");
+        if (titleNode) titleNode.textContent = title;
+
+        const optionsId = target.querySelector(".mini-add")?.getAttribute("aria-controls");
+        const optionsPanel = optionsId ? document.getElementById(optionsId) : null;
+        if (optionsPanel) {
+          optionsPanel.innerHTML = buildInlineOptionsHtml(answers);
+        }
+
+        syncTrackedFollowUp(target, title, answers);
+      } else if (target.classList.contains("tree-question")) {
+        const titleNode = target.querySelector(".question-title");
+        if (titleNode) {
+          titleNode.innerHTML = `<span class="expand-icon" aria-hidden="true"></span>${escapeHtml(title)}`;
+        }
+
+        const content = target.querySelector(".tree-question > div:nth-child(2)") || target.children[1];
+        if (content) {
+          Array.from(content.children)
+            .filter(node => node.classList?.contains("answer-node"))
+            .forEach(node => node.remove());
+
+          const answerNodesHtml = answers.map(answer => `
+            <div class="answer-node">
+              <span class="branch-dot gray"></span>
+              <span>${escapeHtml(answer)}</span>
+              <div class="meta-icons" style="margin-left:auto;">
+                <span class="mi menu-trigger" aria-hidden="true">more_horiz</span>
+                <div class="context-menu">
+                  <button class="add-followup"><span class="mi" aria-hidden="true" style="font-size: 16px; margin-right: 8px;">account_tree</span>Add Follow Up Question</button>
+                  <button class="delete-question"><span class="mi" aria-hidden="true" style="font-size: 16px; margin-right: 8px;">delete</span>Delete</button>
+                </div>
+              </div>
+            </div>
+          `).join("");
+
+          const firstFollowUpNode = Array.from(content.children).find(node =>
+            node.classList?.contains("nested-question") || node.classList?.contains("nested-options")
+          );
+
+          if (firstFollowUpNode) {
+            firstFollowUpNode.insertAdjacentHTML("beforebegin", answerNodesHtml);
+          } else {
+            content.insertAdjacentHTML("beforeend", answerNodesHtml);
+          }
+        }
+      }
+
+      syncAnswerBankFromTree();
+      syncRuleQuestionDropdowns();
+
+      // Drop any profile-selected answers that no longer exist after the edit
+      const primaryRuleCard = getPrimaryRuleCard();
+      const primaryRuleState = primaryRuleCard ? getRuleState(primaryRuleCard) : { selectedAnswers: [] };
+      const currentBank = state.answerBank[primaryRuleCard?.querySelector("#ruleQuestion")?.value] || [];
+      primaryRuleState.selectedAnswers = primaryRuleState.selectedAnswers.filter(item => currentBank.includes(item));
+
+      renderAvailableAnswers(primaryRuleCard);
+      validateRule(primaryRuleCard);
     }
 
     $$("[data-toggle]").forEach(toggle => {
@@ -1520,75 +2994,163 @@
       });
     });
 
-    $$(".menu-trigger").forEach(trigger => {
-      trigger.addEventListener("click", (e) => {
-        e.stopPropagation();
-        const contextMenu = trigger.closest(".meta-icons").querySelector(".context-menu");
+    document.addEventListener("click", event => {
+      const trigger = event.target.closest(".menu-trigger");
+      if (trigger) {
+        event.stopPropagation();
+        const contextMenu = trigger.closest(".meta-icons")?.querySelector(".context-menu");
+        if (!contextMenu) return;
         $$(".context-menu").forEach(menu => {
           if (menu !== contextMenu) menu.classList.remove("open");
         });
         contextMenu.classList.toggle("open");
-      });
-    });
-
-    $$(".context-menu button").forEach(btn => {
-      btn.addEventListener("click", (e) => {
-        e.stopPropagation();
-        if (btn.classList.contains("edit-question")) {
-          const payload = getEditQuestionPayload(btn);
-          openModal(payload.number, payload.title, payload.answers, "edit", payload.responseType);
-        } else if (btn.classList.contains("add-followup")) {
-          const payload = getAddFollowUpPayload(btn);
-          openModal(payload.number, payload.title, payload.answers, "add", payload.responseType);
-        } else if (btn.classList.contains("delete-question")) {
-          toast("Delete question");
-        }
-        btn.closest(".context-menu").classList.remove("open");
-      });
-    });
-
-    document.addEventListener("click", () => {
-      $$(".context-menu").forEach(menu => menu.classList.remove("open"));
-      setMappingOpen(false);
-    });
-
-    $("#mapsTo").addEventListener("click", event => {
-      event.stopPropagation();
-      const open = $("#mappingDropdown").classList.contains("open");
-      setMappingOpen(!open);
-      renderProfileMapping();
-    });
-
-    $("#mappingDropdown").addEventListener("click", event => {
-      event.stopPropagation();
-      const checkbox = event.target.closest("input[data-map-option]");
-      if (!checkbox) return;
-
-      const profileName = checkbox.dataset.mapOption;
-      if (checkbox.checked) {
-        if (!state.selectedMappings.includes(profileName)) {
-          state.selectedMappings.push(profileName);
-        }
-      } else {
-        state.selectedMappings = state.selectedMappings.filter(item => item !== profileName);
+        return;
       }
 
-      renderProfileMapping();
-      markDirty();
+      const contextButton = event.target.closest(".context-menu button");
+      if (contextButton) {
+        event.stopPropagation();
+        if (contextButton.classList.contains("edit-question")) {
+          const editTarget = contextButton.closest(".nested-question") || contextButton.closest(".tree-question");
+          const payload = getEditQuestionPayload(contextButton);
+          openModal(payload.number, payload.title, payload.answers, "edit", payload.responseType, editTarget);
+        } else if (contextButton.classList.contains("add-followup")) {
+          addFollowUpInline(contextButton);
+        } else if (contextButton.classList.contains("delete-question")) {
+          toast("Delete question");
+        }
+        contextButton.closest(".context-menu")?.classList.remove("open");
+        return;
+      }
+
+      const miniToggle = event.target.closest(".mini-add");
+      if (miniToggle) {
+        event.preventDefault();
+        event.stopPropagation();
+        const optionsId = miniToggle.getAttribute("aria-controls");
+        const optionsPanel = optionsId ? document.getElementById(optionsId) : null;
+        if (!optionsPanel) return;
+        const isOpen = optionsPanel.classList.contains("open");
+        optionsPanel.classList.toggle("open", !isOpen);
+        miniToggle.setAttribute("aria-expanded", String(!isOpen));
+        miniToggle.textContent = isOpen ? "add_circle" : "remove_circle";
+        markDirty();
+        return;
+      }
+
+      // Blue area: clicking nested-question title toggles its options panel
+      const nestedTitle = event.target.closest(".nested-question strong");
+      if (nestedTitle) {
+        event.stopPropagation();
+        const miniAdd = nestedTitle.closest(".nested-question")?.querySelector(".mini-add");
+        if (miniAdd) miniAdd.click();
+        return;
+      }
+
+      // Green area: clicking a has-followup answer-node collapses/expands its follow-ons
+      const followupAnswer = event.target.closest(".answer-node.has-followup");
+      if (followupAnswer && !event.target.closest(".meta-icons")) {
+        event.stopPropagation();
+        let sibling = followupAnswer.nextElementSibling;
+        const followups = [];
+        while (sibling && !sibling.classList.contains("answer-node")) {
+          followups.push(sibling);
+          sibling = sibling.nextElementSibling;
+        }
+        if (!followups.length) return;
+        const isHidden = followups[0].style.display === "none";
+        followups.forEach(el => { el.style.display = isHidden ? "" : "none"; });
+        const icon = followupAnswer.querySelector(".branch-expand");
+        if (icon) icon.textContent = isHidden ? "remove_circle" : "add_circle";
+        return;
+      }
+
+      $$(".context-menu").forEach(menu => menu.classList.remove("open"));
+      closeAllMappingDropdowns();
     });
 
-    $("#mappingSelected").addEventListener("click", event => {
-      const removeButton = event.target.closest(".remove-map");
-      if (!removeButton) return;
-
-      event.stopPropagation();
-      state.selectedMappings = state.selectedMappings.filter(item => item !== removeButton.dataset.profile);
-      renderProfileMapping();
-      markDirty();
+    $$(".mapping-toggle").forEach(toggle => {
+      toggle.addEventListener("click", event => {
+        event.stopPropagation();
+        const mappingControl = toggle.closest(".mapping-control[data-lesson-id]");
+        if (!mappingControl) return;
+        const dropdown = mappingControl.querySelector(".mapping-dropdown");
+        const open = dropdown?.classList.contains("open");
+        closeAllMappingDropdowns(mappingControl);
+        setMappingOpen(mappingControl, !open);
+        renderProfileMapping();
+      });
     });
 
-    $("#openQuestion").addEventListener("click", () => openModal("1.2", "Question Title 1", ["Answer Option 1"], "add", "single"));
-    $("#addNested").addEventListener("click", () => openModal("1.1", "Where are you based", ["USA", "Europe", "South America"], "add", "multiple"));
+    $$(".mapping-dropdown").forEach(dropdown => {
+      dropdown.addEventListener("click", event => {
+        event.stopPropagation();
+        const checkbox = event.target.closest("input[data-map-option]");
+        if (!checkbox) return;
+
+        const lessonId = checkbox.dataset.lessonId;
+        const profileName = checkbox.dataset.mapOption;
+        if (!lessonId || !profileName) return;
+
+        const selectedMappings = getLessonMappings(lessonId);
+        if (checkbox.checked) {
+          if (!selectedMappings.includes(profileName)) {
+            selectedMappings.push(profileName);
+          }
+        } else {
+          state.selectedMappingsByLesson[lessonId] = selectedMappings.filter(item => item !== profileName);
+        }
+
+        renderProfileMapping();
+        markDirty();
+      });
+    });
+
+    $$(".mapping-card-header").forEach(header => {
+      header.addEventListener("click", event => {
+        event.stopPropagation();
+        const mappingCard = header.closest(".mapping-card");
+        if (!mappingCard) return;
+
+        const collapsed = mappingCard.classList.toggle("collapsed");
+        header.setAttribute("aria-expanded", String(!collapsed));
+
+        const icon = header.querySelector(".mapping-collapse-icon");
+        if (icon) {
+          icon.textContent = collapsed ? "expand_more" : "expand_less";
+        }
+
+        if (collapsed) closeAllMappingDropdowns();
+      });
+    });
+
+    $$(".mapping-chip-row").forEach(chipRow => {
+      chipRow.addEventListener("click", event => {
+        const removeButton = event.target.closest(".remove-map");
+        if (!removeButton) return;
+
+        event.stopPropagation();
+        const lessonId = removeButton.dataset.lessonId;
+        const profileName = removeButton.dataset.profile;
+        if (!lessonId || !profileName) return;
+
+        state.selectedMappingsByLesson[lessonId] = getLessonMappings(lessonId).filter(item => item !== profileName);
+        renderProfileMapping();
+        markDirty();
+      });
+    });
+
+    $("#openQuestion").addEventListener("click", () => {
+      const treeCard = document.getElementById("questionTree");
+      const maxNumber = Math.max(
+        0,
+        ...Array.from(treeCard.querySelectorAll(".tree-question .number")).map(el =>
+          parseInt(el.textContent.trim().replace(".", ""), 10)
+        )
+      );
+      const nextNumber = maxNumber + 1;
+      openModal(`${nextNumber}`, "Question Title", ["Answer Option 1"], "add", "single");
+    });
     $("#closeModal").addEventListener("click", closeModal);
     $("#cancelModal").addEventListener("click", closeModal);
     $("#questionModal").addEventListener("click", event => {
@@ -1596,18 +3158,82 @@
     });
 
     $("#newQuestionTitle").addEventListener("input", event => {
-      const hints = $("#questionHints");
-      if (event.target.value.length > 4) {
-        const rect = event.target.getBoundingClientRect();
-        hints.style.left = `${rect.left + 64}px`;
-        hints.style.top = `${rect.bottom}px`;
-        hints.classList.add("open");
-      } else {
-        hints.classList.remove("open");
-      }
       markDirty();
     });
-    $("#closeHints").addEventListener("click", () => $("#questionHints").classList.remove("open"));
+
+    $$(".page-level-btn").forEach(button => {
+      button.addEventListener("click", event => {
+        event.stopPropagation();
+        const lessonId = button.dataset.lessonId;
+        if (!lessonId) return;
+        openPageLevelModal(lessonId);
+      });
+    });
+
+    $("#closePageLevelModal").addEventListener("click", closePageLevelModal);
+    $("#pageLevelDone").addEventListener("click", closePageLevelModal);
+    $("#pageLevelModal").addEventListener("click", event => {
+      if (event.target.id === "pageLevelModal") closePageLevelModal();
+    });
+
+    $("#openVisualize").addEventListener("click", openVisualizeModal);
+    $("#closeVisualizeModal").addEventListener("click", closeVisualizeModal);
+    $("#visualizeDone").addEventListener("click", closeVisualizeModal);
+    $("#visualizeModal").addEventListener("click", event => {
+      if (event.target.id === "visualizeModal") closeVisualizeModal();
+    });
+
+    $("#pageLevelPages").addEventListener("click", event => {
+      const pickerButton = event.target.closest(".page-level-picker button[data-profile]");
+      if (pickerButton) {
+        const lessonId = pickerButton.dataset.lessonId;
+        const pageTitle = pickerButton.dataset.pageTitle;
+        const profileName = pickerButton.dataset.profile;
+        if (!lessonId || !pageTitle || !profileName) return;
+
+        const assigned = getPageProfiles(lessonId, pageTitle);
+        if (!assigned.includes(profileName)) assigned.push(profileName);
+        closePagePickers();
+        renderPageLevelModal();
+        markDirty();
+        return;
+      }
+
+      const removeButton = event.target.closest(".remove-page-chip");
+      if (!removeButton) return;
+
+      const lessonId = removeButton.dataset.lessonId;
+      const pageTitle = removeButton.dataset.pageTitle;
+      const profileName = removeButton.dataset.profile;
+      if (!lessonId || !pageTitle || !profileName) return;
+
+      const assigned = getPageProfiles(lessonId, pageTitle);
+      getPageAssignments(lessonId)[pageTitle] = assigned.filter(item => item !== profileName);
+      renderPageLevelModal();
+      markDirty();
+    });
+
+    $("#pageLevelProfiles").addEventListener("click", event => {
+      const removeButton = event.target.closest(".remove-page-level-profile");
+      if (!removeButton) return;
+
+      const lessonId = removeButton.dataset.lessonId;
+      const profileName = removeButton.dataset.profile;
+      if (!lessonId || !profileName) return;
+
+      state.selectedMappingsByLesson[lessonId] = getLessonMappings(lessonId).filter(item => item !== profileName);
+      removeProfileFromAllPages(lessonId, profileName);
+      renderProfileMapping();
+      renderPageLevelModal();
+      markDirty();
+    });
+
+    document.addEventListener("click", event => {
+      if (!event.target.closest("#pageLevelModal")) return;
+      if (!event.target.closest(".page-level-add") && !event.target.closest(".page-level-picker")) {
+        closePagePickers();
+      }
+    });
 
     $("#modalAnswers").addEventListener("click", event => {
       const button = event.target.closest(".remove-modal-answer");
@@ -1642,67 +3268,89 @@
 
     $("#saveQuestion").addEventListener("click", () => {
       const title = $("#newQuestionTitle").value.trim();
-      if (!title || !state.modalAnswers.length) {
+      const normalizedAnswers = state.modalAnswers.map(item => item.trim()).filter(Boolean);
+
+      if (!title || !normalizedAnswers.length) {
         toast("Add a question title and at least one answer option.");
         return;
       }
+
+      state.modalAnswers = normalizedAnswers;
+      if (state.modalMode === "edit") {
+        applyModalEditsToInline(title, normalizedAnswers);
+      } else if (state.modalMode === "add") {
+        const questionNumber = $("#questionNumber").textContent.trim();
+        addNewQuestionToTree(questionNumber, title, normalizedAnswers);
+      }
+
       toast(`Question saved: ${title}`);
       closeModal();
       markDirty();
     });
 
     $("#ruleQuestion").addEventListener("change", () => {
-      state.selectedAnswers = [];
-      renderAvailableAnswers();
-      validateRule();
+      const primaryRuleCard = getPrimaryRuleCard();
+      if (!primaryRuleCard) return;
+      getRuleState(primaryRuleCard).selectedAnswers = [];
+      renderAvailableAnswers(primaryRuleCard);
+      validateRule(primaryRuleCard);
       markDirty();
     });
 
     $("#logicSelect").addEventListener("change", () => {
-      validateRule();
+      validateRule(getPrimaryRuleCard());
       markDirty();
     });
 
-    $("#answerSearch").addEventListener("input", renderAvailableAnswers);
+    $("#answerSearch").addEventListener("input", () => renderAvailableAnswers(getPrimaryRuleCard()));
 
     $("#addSelected").addEventListener("click", () => {
-      if (!$("#ruleQuestion").value) return;
+      const primaryRuleCard = getPrimaryRuleCard();
+      if (!primaryRuleCard || !primaryRuleCard.querySelector("#ruleQuestion")?.value) return;
+      const ruleState = getRuleState(primaryRuleCard);
       $$("#availableAnswers input:checked").forEach(box => {
-        if (!state.selectedAnswers.includes(box.value)) state.selectedAnswers.push(box.value);
+        if (!ruleState.selectedAnswers.includes(box.value)) ruleState.selectedAnswers.push(box.value);
       });
-      renderAvailableAnswers();
-      validateRule();
+      renderAvailableAnswers(primaryRuleCard);
+      validateRule(primaryRuleCard);
       markDirty();
     });
 
     $("#addAll").addEventListener("click", () => {
-      const question = $("#ruleQuestion").value;
+      const primaryRuleCard = getPrimaryRuleCard();
+      const question = primaryRuleCard?.querySelector("#ruleQuestion")?.value;
       if (!question) return;
+      const ruleState = getRuleState(primaryRuleCard);
       state.answerBank[question].forEach(item => {
-        if (!state.selectedAnswers.includes(item)) state.selectedAnswers.push(item);
+        if (!ruleState.selectedAnswers.includes(item)) ruleState.selectedAnswers.push(item);
       });
-      renderAvailableAnswers();
-      validateRule();
+      renderAvailableAnswers(primaryRuleCard);
+      validateRule(primaryRuleCard);
       markDirty();
     });
 
     $("#removeAll").addEventListener("click", () => {
-      state.selectedAnswers = [];
-      renderAvailableAnswers();
-      validateRule();
+      const primaryRuleCard = getPrimaryRuleCard();
+      if (!primaryRuleCard) return;
+      getRuleState(primaryRuleCard).selectedAnswers = [];
+      renderAvailableAnswers(primaryRuleCard);
+      validateRule(primaryRuleCard);
       markDirty();
     });
 
     $("#selectedAnswers").addEventListener("click", event => {
       const button = event.target.closest(".remove-answer");
       if (!button) return;
-      state.selectedAnswers = state.selectedAnswers.filter(item => item !== button.dataset.answer);
-      renderAvailableAnswers();
-      validateRule();
+      const primaryRuleCard = getPrimaryRuleCard();
+      if (!primaryRuleCard) return;
+      const ruleState = getRuleState(primaryRuleCard);
+      ruleState.selectedAnswers = ruleState.selectedAnswers.filter(item => item !== button.dataset.answer);
+      renderAvailableAnswers(primaryRuleCard);
+      validateRule(primaryRuleCard);
       markDirty();
     });
 
-    $("#addProfile").addEventListener("click", () => toast("New profile panel added in the authoring flow."));
+    $("#addProfile").addEventListener("click", () => addProfileCard());
     $("#addRule").addEventListener("click", () => {
       createRulePanel();
       toast("Rule added.");
@@ -1726,6 +3374,13 @@
       el.addEventListener("input", markDirty);
     });
 
+    const initialProfileCard = document.querySelector("#profiles .profile-card");
+    if (initialProfileCard) {
+      bindProfileCard(initialProfileCard);
+    }
+
+    syncRuleQuestionDropdowns();
+    configureDefaultProfileOne();
     renderAvailableAnswers();
     validateRule();
     renderProfileMapping();
